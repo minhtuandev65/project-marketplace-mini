@@ -1,0 +1,91 @@
+{
+    "auth": {
+        "register": {
+            "successfully": "New account registration successful.",
+            "failed": "Register new account failed",
+            "email_exist": "Email already exists"
+        },
+        "login": {
+            "successfully": "Login successful.",
+            "failed": "Login failed",
+            "invalid_credentials": "Invalid email or password",
+            "inconrrect": "Email or password is inconrrect",
+            "inactive": "Account is inactive",
+            "blocked": "Account is blocked"
+        }
+    },
+    "projects": {
+        "create": {
+            "successfully": "Project created successfully.",
+            "failed": "Project creation failed"
+        },
+        "list": {
+            "successfully": "Projects retrieved successfully.",
+            "failed": "Failed to retrieve projects"
+        },
+        "detail": {
+            "successfully": "Project details retrieved successfully.",
+            "failed": "Failed to retrieve project details"
+        },
+        "update": {
+            "successfully": "Project updated successfully.",
+            "failed": "Project update failed"
+        },
+        "remove": {
+            "successfully": "Project removed successfully.",
+            "failed": "Project removal failed"
+        },
+        "not_found": "Project not found"
+    },
+    "schema": {
+        "users": {
+            "email": {
+                "invalid": "Email is invalid. (example@example.com)",
+                "required": "Email is required"
+            },
+            "username": {
+                "required": "Username is required",
+                "invalid": "Name must not contain special characters or numbers."
+            },
+            "password": {
+                "required": "Password is required",
+                "invalid": "Password must include at least 1 letter, a number, and at least 8 characters."
+            }
+        },
+        "projects": {
+            "title": {
+                "required": "Project title is required."
+            },
+            "slug": {
+                "required": "Slug is required.",
+                "invalid": "Slug must be lowercase and use hyphens only."
+            },
+            "shortDescription": {
+                "required": "Short description is required."
+            },
+            "description": {
+                "required": "Description is required."
+            },
+            "thumbnail": {
+                "required": "Thumbnail is required."
+            },
+            "url": {
+                "invalid": "URL is invalid."
+            },
+            "techStack": {
+                "name": {
+                    "required": "Technology name is required."
+                },
+                "type": {
+                    "invalid": "Technology type is invalid."
+                }
+            }
+        },
+        "failed": {
+            "required": "This field is required."
+        }
+    },
+    "users": {
+        "not_found": "User not found"
+    }
+}

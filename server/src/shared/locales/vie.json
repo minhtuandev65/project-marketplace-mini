@@ -1,0 +1,88 @@
+{
+    "auth": {
+        "register": {
+            "successfully": "Đăng ký tài khoản mới thành công",
+            "failed": "Đăng ký tài khoản mới thất bại",
+            "email_exist": "Email đã tồn tại"
+        },
+        "login": {
+            "successfully": "Đăng nhập thành công.",
+            "failed": "Đăng nhập thất bại",
+            "invalid_credentials": "Email hoặc mật khẩu không hợp lệ",
+            "inconrrect": "Email hoặc mật khẩu không chính xác",
+            "inactive": "Tài khoản chưa được kích hoạt",
+            "blocked": "Tài khoản đã bị khóa"
+        }
+    },
+    "projects": {
+        "create": {
+            "successfully": "Tạo dự án thành công.",
+            "failed": "Tạo dự án thất bại"
+        },
+        "list": {
+            "successfully": "Lấy danh sách dự án thành công.",
+            "failed": "Lấy danh sách dự án thất bại"
+        },
+        "detail": {
+            "successfully": "Lấy chi tiết dự án thành công.",
+            "failed": "Lấy chi tiết dự án thất bại"
+        },
+        "update": {
+            "successfully": "Cập nhật dự án thành công.",
+            "failed": "Cập nhật dự án thất bại"
+        },
+        "remove": {
+            "successfully": "Xóa dự án thành công.",
+            "failed": "Xóa dự án thất bại"
+        },
+        "not_found": "Dự án không tồn tại"
+    },
+    "schema": {
+        "users": {
+            "email": {
+                "invalid": "Email không hợp lệ. (example@example.com)",
+                "required": "Email là bắt buộc"
+            },
+            "username": {
+                "required": "Tên người dùng là bắt buộc",
+                "invalid": "Tên người dùng không được chứa ký tự đặc biệt hoặc số."
+            },
+            "password": {
+                "required": "Mật khẩu là bắt buộc",
+                "invalid": "Mật khẩu phải chứa ít nhất 1 chữ cái, 1 số, và ít nhất 8 ký tự."
+            }
+        },
+        "projects": {
+            "title": {
+                "required": "Tiêu đề dự án là bắt buộc."
+            },
+            "slug": {
+                "required": "Slug là bắt buộc.",
+                "invalid": "Slug phải viết thường và chỉ sử dụng dấu gạch ngang."
+            },
+            "shortDescription": {
+                "required": "Mô tả ngắn là bắt buộc."
+            },
+            "description": {
+                "required": "Mô tả là bắt buộc."
+            },
+            "thumbnail": {
+                "required": "Hình thu nhỏ là bắt buộc."
+            },
+            "url": {
+                "invalid": "URL không hợp lệ."
+            },
+            "techStack": {
+                "name": {
+                    "required": "Tên công nghệ là bắt buộc."
+                },
+                "type": {
+                    "invalid": "Loại công nghệ không hợp lệ."
+                }
+            }
+        },
+        "failed": {
+            "required": "Trường này là bắt buộc."
+        }
+    }
+}

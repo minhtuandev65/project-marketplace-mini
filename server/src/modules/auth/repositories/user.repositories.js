@@ -2,12 +2,18 @@ import { ObjectId } from 'mongodb'
 import { getUserCollection } from '~/models/users.model'
 
 const findByEmail = async (email) => {
-    return await getUserCollection().findOne({
-        email,
-        _destroy: false
-    })
+    return await getUserCollection().findOne(
+        { email, _destroy: false },
+        { projection: { password: 1, role: 1, isActive: 1 } }
+    )
 }
-
+const existsEmail = async (email) => {
+    const user = await getUserCollection().findOne(
+        { email, _destroy: false },
+        { projection: { _id: 1 } }
+    )
+    return !!user
+}
 const findById = async (id) => {
     return await getUserCollection().findOne({
         _id: new ObjectId(id),
@@ -19,10 +25,17 @@ const create = async (data) => {
     return await getUserCollection().insertOne(data)
 }
 
+const update = async (data) => {
+    return await getUserCollection().updateOne(
+        { _id: new ObjectId(data._id), _destroy: false },
+        { $set: data }
+    )
+}
+
 const softDelete = async (id) => {
     const DELETE_AFTER_DAYS = 24 * 60 * 60 * 1000
     return await getUserCollection().updateOne(
-        { _id: new ObjectId(id) },
+        { _id: new ObjectId(id), _destroy: false },
         {
             $set: {
                 _destroy: true,
@@ -42,6 +55,7 @@ const hardDeleteExpired = async () => {
 
 export const userRepository = {
     findByEmail,
+    existsEmail,
     findById,
     create,
     softDelete,

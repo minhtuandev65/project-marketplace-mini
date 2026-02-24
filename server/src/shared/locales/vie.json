@@ -12,6 +12,13 @@
             "inconrrect": "Email hoặc mật khẩu không chính xác",
             "inactive": "Tài khoản chưa được kích hoạt",
             "blocked": "Tài khoản đã bị khóa"
+        },
+        "verify_email": {
+            "successfully": "Xác minh email thành công. Bạn có thể đăng nhập và sử dụng dịch vụ của chúng tôi.",
+            "failed": "Xác minh email thất bại. Vui lòng kiểm tra lại đường dẫn xác minh hoặc liên hệ với bộ phận hỗ trợ của chúng tôi.",
+            "invalid_token": "Token xác minh không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu gửi lại email xác minh.",
+            "email_not_found": "Không tìm thấy email trong hệ thống. Vui lòng đăng ký tài khoản trước khi xác minh email.",
+            "already_verified": "Email đã được xác minh trước đó. Bạn có thể đăng nhập và sử dụng dịch vụ của chúng tôi."
         }
     },
     "projects": {

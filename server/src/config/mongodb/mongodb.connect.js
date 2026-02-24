@@ -20,15 +20,10 @@ export const CONNECT_DB = async () => {
         await mongoClientInstance.connect()
         jobSeekDatabaseInstance = mongoClientInstance.db(env.DATABASE_NAME)
 
-        // Tạo text index cho full-text search
-        await jobSeekDatabaseInstance.collection('users').createIndex(
-            {
-                title: 'text',
-                description: 'text',
-                location: 'text'
-            },
-            { name: 'TextIndexForSearch' }
-        )
+        const usersCollection = jobSeekDatabaseInstance.collection('users')
+
+        // Unique index email
+        await usersCollection.createIndex({ email: 1 }, { unique: true })
 
         console.log('🟢 MongoDB connected successfully')
     } catch (error) {

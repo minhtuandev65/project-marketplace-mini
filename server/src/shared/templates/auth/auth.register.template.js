@@ -1,8 +1,8 @@
-import { APP_LOGO } from "~/shared/utils/constants"
+import { APP_ICON_LOGO } from '~/shared/utils/constants'
 
 export const verifyEmailTemplate = ({ fullName, verificationLink }) => {
     return `
-    <!doctype html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -27,38 +27,45 @@ export const verifyEmailTemplate = ({ fullName, verificationLink }) => {
                 overflow: hidden;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             }
+            /* Header sử dụng Table thay vì Flexbox để tương thích email */
             .header {
                 background-color: #eb6118;
-                padding: 30px;
-                text-align: center;
+                padding: 25px 30px;
+            }
+            .header-table {
+                width: auto;
+                margin: 0 auto; /* Căn giữa toàn bộ cụm logo + chữ */
+                border-collapse: collapse;
+            }
+            .header-table td {
+                vertical-align: middle;
+            }
+            .header h2 {
+                color: #000000ff;
+                margin: 0;
+                font-size: 24px;
+                padding-left: 10px; /* Thay thế cho gap */
             }
             .header img {
-                max-width: 180px;
+                display: block;
                 height: auto;
-                display: inline-block;
             }
+            /* Nội dung */
             .content {
                 padding: 30px;
                 color: #333333;
                 font-size: 16px;
                 line-height: 1.6;
             }
-            h2 {
-                color: #333333;
-                margin-top: 0;
-            }
-            p {
-                font-size: 16px;
-                color: #555555;
-                line-height: 1.6;
-                margin-bottom: 15px;
+            .button-container {
+                text-align: center;
+                padding: 20px 0;
             }
             .button {
                 display: inline-block;
                 padding: 12px 24px;
-                margin-top: 20px;
                 background-color: #000000;
-                color: #ffffff;
+                color: #ffffff !important;
                 text-decoration: none;
                 border-radius: 5px;
                 font-weight: bold;
@@ -75,42 +82,44 @@ export const verifyEmailTemplate = ({ fullName, verificationLink }) => {
     <body>
         <div class="email-wrapper">
             <div class="container">
-                <!-- Header với logo -->
                 <div class="header">
-                    <img src=${APP_LOGO} alt="Foodiehub-qt Logo" />
+                    <table class="header-table" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td>
+                                <img src="${APP_ICON_LOGO}" alt="MT Logo" width="40" style="border:0; outline:none; text-decoration:none;" />
+                            </td>
+                            <td>
+                                <h2>MT-Marketplace</h2>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
-                <!-- Content -->
                 <div class="content">
-                    <h2>Welcome to FoodieHub-qt!</h2>
+                    <h2 style="color: #333333;">Welcome to MT-Marketplace!</h2>
                     <p>Hi <strong>${fullName}</strong>,</p>
                     <p>
                         Thank you for creating an account with us. Please
                         confirm your email address by clicking the button below:
                     </p>
-                    <a href="${verificationLink}" class="button"
-                        >Verify Your Email</a
-                    >
+                    <div class="button-container">
+                        <a href="${verificationLink}" class="button">Verify Your Email</a>
+                    </div>
                     <p>
                         If the button doesn't work, copy and paste this URL into
                         your browser:
                     </p>
-                    <p style="word-break: break-all">
-                        <a href="${verificationLink}">${verificationLink}</a>
+                    <p style="word-break: break-all; font-size: 14px;">
+                        <a href="${verificationLink}" style="color: #eb6118;">${verificationLink}</a>
                     </p>
                 </div>
 
-                <!-- Footer -->
                 <div class="footer">
-                    <p>
-                        If you didn’t create this account, you can safely ignore
-                        this email.
-                    </p>
+                    <p>If you didn’t create this account, you can safely ignore this email.</p>
                 </div>
             </div>
         </div>
     </body>
 </html>
-
-  `
+    `
 }

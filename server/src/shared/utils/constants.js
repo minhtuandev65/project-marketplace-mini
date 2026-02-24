@@ -11,8 +11,8 @@ export const WEBSITE_DOMAIN =
     env.BUILD_MODE === 'production'
         ? env.WEBSITE_DOMAIN_PRODUCTION
         : env.WEBSITE_DOMAIN_DEVELOPMENT
-export const APP_LOGO =
-    'https://project-foodiehub-qt.s3.us-east-1.amazonaws.com/logo-banner-web/logo.png'
+export const APP_ICON_LOGO =
+    'https://project-marketplace-mini.s3.us-east-1.amazonaws.com/server-logo/icon-logo.png'
 
 export const ROLE = {
     ADMIN: 1,

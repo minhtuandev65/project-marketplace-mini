@@ -4,7 +4,7 @@ import ApiError from '~/shared/utils/ApiError'
 
 export const register = async (req, res) => {
     try {
-        const result = await servicesAuth.register(req.body)
+        await servicesAuth.register(req.body)
 
         res.status(StatusCodes.CREATED).json({
             status: 'success',

@@ -8,7 +8,9 @@ import { env } from '~/config/env/environment'
 
 export const login = async (reqData) => {
     try {
-        const existEmail = await userRepository.findByEmail(reqData.email)
+        const existEmail = await userRepository.findAccountByEmail(
+            reqData.email
+        )
 
         if (!existEmail) {
             throw new ApiError(StatusCodes.NOT_FOUND, 'auth.login.inconrrect')

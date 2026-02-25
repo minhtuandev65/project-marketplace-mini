@@ -9,6 +9,8 @@ Router.route('/login').post(controllersAuth.login)
 
 Router.route('/verify-email').post(controllersAuth.verifyEmail)
 
+Router.route('/refresh-token').post(controllersAuth.refreshToken)
+
 /* Router.route('/logout').post() */
 
 export const auth = Router

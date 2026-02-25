@@ -16,6 +16,10 @@
             "invalid_token": "Token xác minh không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu gửi lại email xác minh.",
             "email_not_found": "Không tìm thấy email trong hệ thống. Vui lòng đăng ký tài khoản trước khi xác minh email.",
             "already_verified": "Email đã được xác minh trước đó. Bạn có thể đăng nhập và sử dụng dịch vụ của chúng tôi."
+        },
+        "refresh_token": {
+            "successfully": "Làm mới token thành công.",
+            "failed": "Làm mới token thất bại. Vui lòng đăng nhập lại."
         }
     },
     "projects": {

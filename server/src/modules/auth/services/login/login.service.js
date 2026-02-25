@@ -40,7 +40,6 @@ export const login = async (reqData) => {
             env.REFRESH_TOKEN_SECRET_SIGNATURE,
             env.REFRESH_TOKEN_LIFE
         )
-
         return {
             ...userInfo,
             accessToken,

@@ -1,24 +1,60 @@
 import { ObjectId } from 'mongodb'
 import { getUserCollection } from '~/models/users.model'
 
-const findByEmail = async (email) => {
+const baseFilter = { _destroy: false }
+const now = new Date()
+
+/* Dùng cho đăng nhập */
+const findAccountByEmail = async (email) => {
     return await getUserCollection().findOne(
-        { email, _destroy: false },
-        { projection: { password: 1, role: 1, isActive: 1 } }
+        { email, ...baseFilter, isActive: true },
+        { projection: { _id: 1, role: 1, isActive: 1, fullName: 1 } }
     )
 }
+/* Kiểm tra tồn tại không trả về document */
 const existsEmail = async (email) => {
-    const user = await getUserCollection().findOne(
-        { email, _destroy: false },
-        { projection: { _id: 1 } }
+    return (
+        (await getUserCollection().countDocuments(
+            { email, ...baseFilter, isActive: true },
+            { limit: 1 }
+        )) > 0
     )
-    return !!user
 }
+/* Dùng để kiểm tra verify email */
+const findAccountVerified = async (email) => {
+    return await getUserCollection().findOne(
+        { email, ...baseFilter },
+        {
+            projection: {
+                isActive: 1,
+                verifyToken: 1
+            }
+        }
+    )
+}
+/* Dùng để cập nhật thông tin đã verify email */
+const updateVerified = async (email) => {
+    return await getUserCollection().updateOne(
+        { email, ...baseFilter },
+        {
+            $set: {
+                isActive: true,
+                latestActiveAt: now,
+                updatedAt: now
+            },
+            $unset: { verifyToken: '' }
+        }
+    )
+}
+/* Dùng cho việc lấy thông tin cá nhân user */
 const findById = async (id) => {
-    return await getUserCollection().findOne({
-        _id: new ObjectId(id),
-        _destroy: false
-    })
+    return await getUserCollection().findOne(
+        {
+            _id: new ObjectId(id),
+            ...baseFilter
+        },
+        { projection: { password: 0 } }
+    )
 }
 
 const create = async (data) => {
@@ -27,7 +63,7 @@ const create = async (data) => {
 
 const update = async (data) => {
     return await getUserCollection().updateOne(
-        { _id: new ObjectId(data._id), _destroy: false },
+        { _id: new ObjectId(data._id), ...baseFilter },
         { $set: data }
     )
 }
@@ -35,7 +71,7 @@ const update = async (data) => {
 const softDelete = async (id) => {
     const DELETE_AFTER_DAYS = 24 * 60 * 60 * 1000
     return await getUserCollection().updateOne(
-        { _id: new ObjectId(id), _destroy: false },
+        { _id: new ObjectId(id), ...baseFilter },
         {
             $set: {
                 _destroy: true,
@@ -54,10 +90,12 @@ const hardDeleteExpired = async () => {
 }
 
 export const userRepository = {
-    findByEmail,
+    findAccountByEmail,
     existsEmail,
+    findAccountVerified,
     findById,
     create,
     softDelete,
-    hardDeleteExpired
+    hardDeleteExpired,
+    updateVerified
 }

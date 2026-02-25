@@ -8,10 +8,7 @@
         "login": {
             "successfully": "Đăng nhập thành công.",
             "failed": "Đăng nhập thất bại",
-            "invalid_credentials": "Email hoặc mật khẩu không hợp lệ",
-            "inconrrect": "Email hoặc mật khẩu không chính xác",
-            "inactive": "Tài khoản chưa được kích hoạt",
-            "blocked": "Tài khoản đã bị khóa"
+            "incorrect": "Email hoặc mật khẩu không chính xác"
         },
         "verify_email": {
             "successfully": "Xác minh email thành công. Bạn có thể đăng nhập và sử dụng dịch vụ của chúng tôi.",

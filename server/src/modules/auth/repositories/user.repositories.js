@@ -5,10 +5,18 @@ const baseFilter = { _destroy: false }
 const now = new Date()
 
 /* Dùng cho đăng nhập */
-const findAccountByEmail = async (email) => {
+const findAccountForLogin = async (email) => {
     return await getUserCollection().findOne(
-        { email, ...baseFilter, isActive: true },
-        { projection: { _id: 1, role: 1, isActive: 1, fullName: 1 } }
+        { email, ...baseFilter },
+        {
+            projection: {
+                _id: 1,
+                role: 1,
+                isActive: 1,
+                fullName: 1,
+                password: 1
+            }
+        }
     )
 }
 /* Kiểm tra tồn tại không trả về document */
@@ -23,7 +31,7 @@ const existsEmail = async (email) => {
 /* Dùng để kiểm tra verify email */
 const findAccountVerified = async (email) => {
     return await getUserCollection().findOne(
-        { email, ...baseFilter },
+        { email, ...baseFilter, isActive: false },
         {
             projection: {
                 isActive: 1,
@@ -61,13 +69,6 @@ const create = async (data) => {
     return await getUserCollection().insertOne(data)
 }
 
-const update = async (data) => {
-    return await getUserCollection().updateOne(
-        { _id: new ObjectId(data._id), ...baseFilter },
-        { $set: data }
-    )
-}
-
 const softDelete = async (id) => {
     const DELETE_AFTER_DAYS = 24 * 60 * 60 * 1000
     return await getUserCollection().updateOne(
@@ -90,7 +91,7 @@ const hardDeleteExpired = async () => {
 }
 
 export const userRepository = {
-    findAccountByEmail,
+    findAccountForLogin,
     existsEmail,
     findAccountVerified,
     findById,

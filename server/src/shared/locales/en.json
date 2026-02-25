@@ -1,20 +1,17 @@
 {
     "auth": {
         "register": {
-            "successfully": "New account registration successful.",
+            "successfully": "New account registration successfully.",
             "failed": "Register new account failed",
             "email_exist": "Email already exists"
         },
         "login": {
-            "successfully": "Login successful.",
+            "successfully": "Login successfully.",
             "failed": "Login failed",
-            "invalid_credentials": "Invalid email or password",
-            "inconrrect": "Email or password is inconrrect",
-            "inactive": "Account is inactive",
-            "blocked": "Account is blocked"
+            "incorrect": "Email or password is incorrect"
         },
         "verify_email": {
-            "successfully": "Email verification successful. You can now login and use our services.",
+            "successfully": "Email verification successfully. You can now login and use our services.",
             "failed": "Email verification failed. Please check the verification link or contact our support team.",
             "invalid_token": "Invalid or expired verification token. Please request a new verification email.",
             "email_not_found": "Email not found in the system. Please register an account before verifying your email.",

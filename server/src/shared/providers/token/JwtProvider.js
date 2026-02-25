@@ -6,7 +6,6 @@ const generateToken = async (userInfo, secretKey, expireTime) => {
             algorithm: 'HS256',
             expiresIn: expireTime
         })
-
         return token
     } catch (error) {
         throw new Error(error)

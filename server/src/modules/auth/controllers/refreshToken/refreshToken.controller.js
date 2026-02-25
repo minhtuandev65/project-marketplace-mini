@@ -1,31 +1,25 @@
 import { StatusCodes } from 'http-status-codes'
 import { servicesAuth } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
-import { env } from '~/config/env/environment'
 import ms from 'ms'
+import { env } from '~/config/env/environment'
 
-export const login = async (req, res) => {
+export const refreshToken = async (req, res) => {
     try {
-        const result = await servicesAuth.login(req.body)
-        const { refreshToken, ...data } = result
-        const isProduction = env.BUILD_MODE === 'production'
+        const result = await servicesAuth.refreshToken(
+            req.cookies?.refreshToken
+        )
 
-        res.cookie('accessToken', data.accessToken, {
+        res.cookie('accessToken', result.accessToken, {
             httpOnly: true,
-            secure: isProduction, // bỏ secure khi dev local http
-            sameSite: isProduction ? 'None' : 'lax', // dev local không cần none
+            secure: true,
+            sameSite: 'none',
             maxAge: ms(env.ACCESS_TOKEN_LIFE)
-        })
-        res.cookie('refreshToken', refreshToken, {
-            httpOnly: true,
-            secure: isProduction,
-            sameSite: isProduction ? 'None' : 'lax',
-            maxAge: ms('2 days')
         })
         res.status(StatusCodes.OK).json({
             status: 'success',
-            message: req.t('auth.login.successfully'),
-            data
+            message: req.t('auth.refresh_token.successfully'),
+            data: result
         })
     } catch (error) {
         const { t } = req
@@ -43,7 +37,7 @@ export const login = async (req, res) => {
 
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
             status: 'error',
-            message: t('auth.login.failed')
+            message: t('auth.refresh_token.failed')
         })
     }
 }

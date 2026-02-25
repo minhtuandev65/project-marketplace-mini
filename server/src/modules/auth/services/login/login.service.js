@@ -5,33 +5,30 @@ import Joi from 'joi'
 import { userRepository } from '../../repositories/user.repositories'
 import { JwtProvider } from '~/shared/providers/token/JwtProvider'
 import { env } from '~/config/env/environment'
+import { LOGIN_SCHEMA } from '../../validators/user.login.schema'
 
 export const login = async (reqData) => {
     try {
-        const existEmail = await userRepository.findAccountByEmail(
-            reqData.email
-        )
+        const payload = await LOGIN_SCHEMA.validateAsync(reqData, {
+            abortEarly: false
+        })
+        const account = await userRepository.findAccountForLogin(payload.email)
 
-        if (!existEmail) {
-            throw new ApiError(StatusCodes.NOT_FOUND, 'auth.login.inconrrect')
+        if (!account) {
+            throw new ApiError(StatusCodes.UNAUTHORIZED, 'auth.login.incorrect')
         }
-        if (!existEmail.isActive) {
-            throw new ApiError(StatusCodes.FORBIDDEN, 'auth.login.inactive')
+
+        const isMatch = await bcrypt.compare(payload.password, account.password)
+
+        if (!isMatch || !account.isActive) {
+            throw new ApiError(StatusCodes.UNAUTHORIZED, 'auth.login.incorrect')
         }
-        if (existEmail._destroy === true) {
-            throw new ApiError(StatusCodes.LOCKED, 'auth.login.blocked')
-        }
-        if (!bcrypt.compareSync(reqData.password, existEmail.password)) {
-            throw new ApiError(
-                StatusCodes.NOT_ACCEPTABLE,
-                'auth.login.inconrrect'
-            )
-        }
+
         const userInfo = {
-            _id: existEmail._id,
-            email: existEmail.email,
-            role: existEmail.role,
-            fullName: existEmail.fullName
+            _id: account._id,
+            email: account.email,
+            role: account.role,
+            fullName: account.fullName
         }
         const accessToken = await JwtProvider.generateToken(
             userInfo,

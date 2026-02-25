@@ -42,7 +42,7 @@ export const login = async (req, res) => {
 
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
             status: 'error',
-            message: t('auth.register.failed')
+            message: t('auth.login.failed')
         })
     }
 }

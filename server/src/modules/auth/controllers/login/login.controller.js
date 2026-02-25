@@ -10,12 +10,6 @@ export const login = async (req, res) => {
         const { refreshToken, ...data } = result
         const isProduction = env.BUILD_MODE === 'production'
 
-        res.cookie('accessToken', data.accessToken, {
-            httpOnly: true,
-            secure: isProduction, // bỏ secure khi dev local http
-            sameSite: isProduction ? 'None' : 'lax', // dev local không cần none
-            maxAge: ms(env.ACCESS_TOKEN_LIFE)
-        })
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
             secure: isProduction,

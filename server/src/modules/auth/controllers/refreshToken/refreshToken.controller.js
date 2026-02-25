@@ -1,8 +1,6 @@
 import { StatusCodes } from 'http-status-codes'
 import { servicesAuth } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
-import ms from 'ms'
-import { env } from '~/config/env/environment'
 
 export const refreshToken = async (req, res) => {
     try {
@@ -10,12 +8,6 @@ export const refreshToken = async (req, res) => {
             req.cookies?.refreshToken
         )
 
-        res.cookie('accessToken', result.accessToken, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'none',
-            maxAge: ms(env.ACCESS_TOKEN_LIFE)
-        })
         res.status(StatusCodes.OK).json({
             status: 'success',
             message: req.t('auth.refresh_token.successfully'),

@@ -1,10 +1,14 @@
 import { StatusCodes } from 'http-status-codes'
 import { servicesAuth } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
+import { VERIFY_EMAIL_SCHEMA } from '../../validators/user.verify.schema'
 
 export const verifyEmail = async (req, res) => {
     try {
-        await servicesAuth.verifyEmail(req.body)
+        const payload = await VERIFY_EMAIL_SCHEMA.validateAsync(req.body, {
+            abortEarly: false
+        })
+        await servicesAuth.verifyEmail(payload)
 
         res.status(StatusCodes.OK).json({
             status: 'success',

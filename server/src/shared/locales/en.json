@@ -1,4 +1,7 @@
 {
+    "settings": {
+        "language_changed": "Language changed successfully."
+    },
     "auth": {
         "register": {
             "successfully": "New account registration successfully.",
@@ -20,6 +23,10 @@
         "refresh_token": {
             "successfully": "Token refreshed successfully.",
             "failed": "Token refresh failed. Please log in again."
+        },
+        "logout": {
+            "successfully": "Logout successfully.",
+            "failed": "Logout failed. Please try again."
         }
     },
     "projects": {

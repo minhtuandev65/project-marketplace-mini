@@ -2,14 +2,10 @@ import { userRepository } from '../../repositories/user.repositories'
 import ApiError from '~/shared/utils/ApiError'
 import { StatusCodes } from 'http-status-codes'
 import Joi from 'joi'
-import { VERIFY_EMAIL_SCHEMA } from '../../validators/user.verify.schema'
 
 export const verifyEmail = async (reqData) => {
     try {
-        const payload = await VERIFY_EMAIL_SCHEMA.validateAsync(reqData, {
-            abortEarly: false
-        })
-        const { email, token } = payload
+        const { email, token } = reqData
         const accountVerified = await userRepository.findAccountVerified(email)
 
         if (!accountVerified) {

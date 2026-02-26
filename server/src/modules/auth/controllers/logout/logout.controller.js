@@ -1,8 +1,9 @@
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '~/shared/utils/ApiError'
 
-export const login = async (req, res) => {
+export const logout = async (req, res) => {
     try {
+        const refreshToken = req.cookies.refreshToken
         res.clearCookie('refreshToken')
 
         res.status(StatusCodes.OK).json({

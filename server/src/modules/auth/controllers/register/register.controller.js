@@ -1,10 +1,14 @@
 import { StatusCodes } from 'http-status-codes'
 import { servicesAuth } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
+import { REGISTER_SCHEMA } from '../../validators/user.register.schema'
 
 export const register = async (req, res) => {
     try {
-        await servicesAuth.register(req.body)
+        const payload = await REGISTER_SCHEMA.validateAsync(req.body, {
+            abortEarly: false
+        })
+        await servicesAuth.register(payload)
 
         res.status(StatusCodes.CREATED).json({
             status: 'success',

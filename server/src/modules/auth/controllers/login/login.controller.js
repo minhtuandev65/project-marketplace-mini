@@ -3,10 +3,14 @@ import { servicesAuth } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
 import { env } from '~/config/env/environment'
 import ms from 'ms'
+import { LOGIN_SCHEMA } from '../../validators/user.login.schema'
 
 export const login = async (req, res) => {
     try {
-        const result = await servicesAuth.login(req.body)
+        const payload = await LOGIN_SCHEMA.validateAsync(req.body, {
+            abortEarly: false
+        })
+        const result = await servicesAuth.login(payload)
         const { refreshToken, ...data } = result
         const isProduction = env.BUILD_MODE === 'production'
 

@@ -1,5 +1,6 @@
 import express from 'express'
 import { auth } from './auth/auth.routes'
+import { settings } from './settings/setting.routes'
 
 const Router = express.Router()
 
@@ -10,4 +11,5 @@ Router.get('/health', (req, res) => {
 })
 
 Router.use('/api/auth', auth)
+Router.use('/api/settings', settings)
 export const APIs_v1 = Router

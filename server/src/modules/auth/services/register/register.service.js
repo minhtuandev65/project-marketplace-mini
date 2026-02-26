@@ -4,7 +4,6 @@ import { userRepository } from '../../repositories/user.repositories'
 import ApiError from '~/shared/utils/ApiError'
 import { StatusCodes } from 'http-status-codes'
 import Joi from 'joi'
-import { REGISTER_SCHEMA } from '../../validators/user.register.schema'
 import { USER_COLLECTION_SCHEMA } from '../../validators/user.collection.schema'
 import { WEBSITE_DOMAIN } from '~/shared/utils/constants'
 import { ResendProvider } from '~/shared/providers/email/ResendProvider'
@@ -12,15 +11,11 @@ import { templates } from '~/shared/templates'
 
 export const register = async (reqData) => {
     try {
-        const payload = await REGISTER_SCHEMA.validateAsync(reqData, {
-            abortEarly: false
-        })
-
         const rawUserData = {
-            email: payload.email,
-            password: await bcrypt.hash(payload.password, 8),
-            username: payload.email.split('@')[0],
-            fullName: payload.fullName ?? null,
+            email: reqData.email,
+            password: await bcrypt.hash(reqData.password, 8),
+            username: reqData.email.split('@')[0],
+            fullName: reqData.fullName ?? null,
             verifyToken: uuidv4()
         }
 

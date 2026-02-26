@@ -1,12 +1,18 @@
 import { StatusCodes } from 'http-status-codes'
 import { servicesAuth } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
+import { REFRESHTOKEN_SCHEMA } from '../../validators/user.refreshToken.schema'
 
 export const refreshToken = async (req, res) => {
     try {
-        const result = await servicesAuth.refreshToken(
-            req.cookies?.refreshToken
+        const { refreshToken } = req.cookies
+
+        const payload = await REFRESHTOKEN_SCHEMA.validateAsync(
+            { refreshToken },
+            { abortEarly: false }
         )
+
+        const result = await servicesAuth.refreshToken(payload.refreshToken)
 
         res.status(StatusCodes.OK).json({
             status: 'success',

@@ -5,16 +5,20 @@ import Joi from 'joi'
 import { userRepository } from '../../repositories/user.repositories'
 import { JwtProvider } from '~/shared/providers/token/JwtProvider'
 import { env } from '~/config/env/environment'
+import { LOGIN_SCHEMA } from '../../validators/user.login.schema'
 
-export const login = async (reqData) => {
+export const logout = async (reqData) => {
     try {
-        const account = await userRepository.findAccountForLogin(reqData.email)
+        const payload = await LOGIN_SCHEMA.validateAsync(reqData, {
+            abortEarly: false
+        })
+        const account = await userRepository.findAccountForLogin(payload.email)
         const _id = String(account?._id)
         if (!account) {
             throw new ApiError(StatusCodes.UNAUTHORIZED, 'auth.login.incorrect')
         }
 
-        const isMatch = await bcrypt.compare(reqData.password, account.password)
+        const isMatch = await bcrypt.compare(payload.password, account.password)
 
         if (!isMatch || !account.isActive) {
             throw new ApiError(StatusCodes.UNAUTHORIZED, 'auth.login.incorrect')

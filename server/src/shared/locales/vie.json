@@ -1,4 +1,7 @@
 {
+    "settings": {
+        "language_changed": "Thay đổi ngôn ngữ thành công."
+    },
     "auth": {
         "register": {
             "successfully": "Đăng ký tài khoản mới thành công",
@@ -21,6 +24,10 @@
             "successfully": "Làm mới token thành công.",
             "failed": "Làm mới token thất bại. Vui lòng đăng nhập lại.",
             "invalid_token": "Token làm mới không hợp lệ hoặc đã hết hạn. Vui lòng đăng nhập lại."
+        },
+        "logout": {
+            "successfully": "Đăng xuất thành công.",
+            "failed": "Đăng xuất thất bại. Vui lòng thử lại."
         }
     },
     "projects": {

@@ -1,4 +1,6 @@
+import { StatusCodes } from 'http-status-codes'
 import JWT from 'jsonwebtoken'
+import ApiError from '~/shared/utils/ApiError'
 
 const generateToken = async (userInfo, secretKey, expireTime) => {
     try {
@@ -16,7 +18,10 @@ const verifyToken = async (token, secretKey) => {
     try {
         return JWT.verify(token, secretKey)
     } catch (error) {
-        throw new Error(error)
+        if (error.name === 'TokenExpiredError') {
+            throw new ApiError(StatusCodes.UNAUTHORIZED, 'Token expired')
+        }
+        throw new ApiError(StatusCodes.UNAUTHORIZED, 'Invalid token')
     }
 }
 

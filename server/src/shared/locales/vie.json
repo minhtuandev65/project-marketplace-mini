@@ -19,7 +19,8 @@
         },
         "refresh_token": {
             "successfully": "Làm mới token thành công.",
-            "failed": "Làm mới token thất bại. Vui lòng đăng nhập lại."
+            "failed": "Làm mới token thất bại. Vui lòng đăng nhập lại.",
+            "invalid_token": "Token làm mới không hợp lệ hoặc đã hết hạn. Vui lòng đăng nhập lại."
         }
     },
     "projects": {

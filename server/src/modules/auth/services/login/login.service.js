@@ -13,7 +13,7 @@ export const login = async (reqData) => {
             abortEarly: false
         })
         const account = await userRepository.findAccountForLogin(payload.email)
-
+        const _id = String(account?._id)
         if (!account) {
             throw new ApiError(StatusCodes.UNAUTHORIZED, 'auth.login.incorrect')
         }
@@ -25,7 +25,7 @@ export const login = async (reqData) => {
         }
 
         const userInfo = {
-            _id: account._id,
+            _id,
             email: account.email,
             role: account.role,
             fullName: account.fullName
@@ -36,10 +36,13 @@ export const login = async (reqData) => {
             env.ACCESS_TOKEN_LIFE
         )
         const refreshToken = await JwtProvider.generateToken(
-            userInfo,
+            { _id },
             env.REFRESH_TOKEN_SECRET_SIGNATURE,
             env.REFRESH_TOKEN_LIFE
         )
+        const hashedRefreshToken = await bcrypt.hash(refreshToken, 10)
+
+        await userRepository.updateRefreshToken(_id, hashedRefreshToken)
         return {
             ...userInfo,
             accessToken,

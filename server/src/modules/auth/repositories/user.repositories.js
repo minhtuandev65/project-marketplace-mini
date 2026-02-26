@@ -11,6 +11,7 @@ const findAccountForLogin = async (email) => {
         {
             projection: {
                 _id: 1,
+                email: 1,
                 role: 1,
                 isActive: 1,
                 fullName: 1,
@@ -54,12 +55,22 @@ const updateVerified = async (email) => {
         }
     )
 }
+/* Dùng để cập nhật refresh token */
+const updateRefreshToken = async (id, refreshToken) => {
+    return await getUserCollection().updateOne(
+        { _id: new ObjectId(id), ...baseFilter, isActive: true },
+        {
+            $set: { refreshToken }
+        }
+    )
+}
 /* Dùng cho việc lấy thông tin cá nhân user */
 const findById = async (id) => {
     return await getUserCollection().findOne(
         {
             _id: new ObjectId(id),
-            ...baseFilter
+            ...baseFilter,
+            isActive: true
         },
         { projection: { password: 0 } }
     )
@@ -98,5 +109,6 @@ export const userRepository = {
     create,
     softDelete,
     hardDeleteExpired,
-    updateVerified
+    updateVerified,
+    updateRefreshToken
 }

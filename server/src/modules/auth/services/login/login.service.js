@@ -5,40 +5,52 @@ import Joi from 'joi'
 import { userRepository } from '../../repositories/user.repositories'
 import { JwtProvider } from '~/shared/providers/token/JwtProvider'
 import { env } from '~/config/env/environment'
+import { refreshTokenRepository } from '../../repositories/refreshToken.repositories'
 
-export const login = async (reqData) => {
+export const login = async (reqData, dataRefreshToken) => {
     try {
-        const account = await userRepository.findAccountForLogin(reqData.email)
-        const _id = String(account?._id)
-        if (!account) {
+        const user = await userRepository.findUserForLogin(reqData.email)
+        const userId = String(user?._id)
+        if (!user) {
             throw new ApiError(StatusCodes.UNAUTHORIZED, 'auth.login.incorrect')
         }
 
-        const isMatch = await bcrypt.compare(reqData.password, account.password)
+        const isMatch = await bcrypt.compare(reqData.password, user.password)
 
-        if (!isMatch || !account.isActive) {
+        if (!isMatch || !user.isActive) {
             throw new ApiError(StatusCodes.UNAUTHORIZED, 'auth.login.incorrect')
         }
 
         const userInfo = {
-            _id,
-            email: account.email,
-            role: account.role,
-            fullName: account.fullName
+            userId,
+            email: user.email,
+            role: user.role,
+            fullName: user.fullName
         }
+        const jti = crypto.randomUUID()
         const accessToken = await JwtProvider.generateToken(
             userInfo,
             env.ACCESS_TOKEN_SECRET_SIGNATURE,
             env.ACCESS_TOKEN_LIFE
         )
         const refreshToken = await JwtProvider.generateToken(
-            { _id },
+            { userId, jti },
             env.REFRESH_TOKEN_SECRET_SIGNATURE,
             env.REFRESH_TOKEN_LIFE
         )
-        const hashedRefreshToken = await bcrypt.hash(refreshToken, 10)
 
-        await userRepository.updateRefreshToken(_id, hashedRefreshToken)
+        const hashedRefreshToken = await bcrypt.hash(refreshToken, 10)
+        const refreshTokenInfo = {
+            ...dataRefreshToken,
+            token: hashedRefreshToken,
+            jti
+        }
+
+        await refreshTokenRepository.insertRefreshToken(
+            refreshTokenInfo,
+            userId
+        )
+
         return {
             ...userInfo,
             accessToken,

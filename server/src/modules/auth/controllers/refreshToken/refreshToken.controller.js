@@ -2,17 +2,31 @@ import { StatusCodes } from 'http-status-codes'
 import { servicesAuth } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
 import { REFRESHTOKEN_SCHEMA } from '../../validators/user.refreshToken.schema'
+import UAParser from 'ua-parser-js'
 
 export const refreshToken = async (req, res) => {
     try {
         const { refreshToken } = req.cookies
-
+        const parser = new UAParser(req.headers['user-agent'])
+        const ua = parser.getResult()
+        const deviceInfo = {
+            browser: ua.browser.name,
+            os: ua.os.name,
+            device: ua.device.type || 'desktop'
+        }
+        const dataRefreshToken = {
+            ...deviceInfo,
+            ipAddress: req.ip
+        }
         const payload = await REFRESHTOKEN_SCHEMA.validateAsync(
             { refreshToken },
             { abortEarly: false }
         )
 
-        const result = await servicesAuth.refreshToken(payload.refreshToken)
+        const result = await servicesAuth.refreshToken(
+            payload.refreshToken,
+            dataRefreshToken
+        )
 
         res.status(StatusCodes.OK).json({
             status: 'success',

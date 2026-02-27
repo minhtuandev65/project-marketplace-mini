@@ -12,6 +12,6 @@ Router.route('/verify-email').post(controllersAuth.verifyEmail)
 
 Router.route('/refresh-token').post(isAuthorized, controllersAuth.refreshToken)
 
-/* Router.route('/logout').post() */
+Router.route('/logout').post(isAuthorized, controllersAuth.logout)
 
 export const auth = Router

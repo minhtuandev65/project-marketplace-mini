@@ -3,58 +3,104 @@ import Joi from 'joi'
 import { env } from '~/config/env/environment'
 import { JwtProvider } from '~/shared/providers/token/JwtProvider'
 import ApiError from '~/shared/utils/ApiError'
-import { userRepository } from '../../repositories/user.repositories'
 import bcrypt from 'bcryptjs'
+import { refreshTokenRepository } from '../../repositories/refreshToken.repositories'
+import { userRepository } from '../../repositories/user.repositories'
 
-export const refreshToken = async (refreshTokenFromCookie) => {
+export const refreshToken = async (
+    refreshTokenFromCookie,
+    dataRefreshToken
+) => {
     try {
-        // Bước 01: Thực hiện giải mã token xem nó có hợp lệ hay là không
+        // Bước 01: Giải mã token lấy ra payload, nếu token không hợp lệ sẽ trả về lỗi
         const refreshTokenDecoded = await JwtProvider.verifyToken(
             refreshTokenFromCookie,
             env.REFRESH_TOKEN_SECRET_SIGNATURE
         )
-        // Bước 02: Kiểm tra xem token có tồn tại trong database hay không
-        const user = await userRepository.findById(refreshTokenDecoded._id)
-        if (!user || !user.refreshToken) {
+
+        const { jti } = refreshTokenDecoded
+        const userId = String(refreshTokenDecoded.userId)
+        if (!userId || !jti) {
             throw new ApiError(
                 StatusCodes.UNAUTHORIZED,
                 'auth.refresh_token.invalid_token'
             )
         }
-        // Bước 03: So sánh token trong cookie với token trong database xem có khớp hay không
+        // Bước 02: Tìm token theo userId + jti trong DB, nếu không tìm thấy thì tức là token không hợp lệ
+
+        const tokenDoc = await refreshTokenRepository.findRefreshToken(
+            userId,
+            jti
+        )
+        // 🚨 Reuse detection
+        if (!tokenDoc) {
+            // Token hợp lệ về mặt chữ ký nhưng không tồn tại trong DB
+            // Có thể đã bị dùng rồi (reuse attack)
+            await refreshTokenRepository.deleteUponDetectionReuse(userId, jti)
+
+            throw new ApiError(
+                StatusCodes.UNAUTHORIZED,
+                'auth.refresh_token.reuse_detected'
+            )
+        }
+        // Bước 03: So sánh token gửi lên với token đã được hash trong DB, nếu không khớp thì trả về lỗi
         const isValid = await bcrypt.compare(
             refreshTokenFromCookie,
-            user.refreshToken
+            tokenDoc.token
         )
 
-        if (!isValid)
+        if (!isValid) {
+            await refreshTokenRepository.deleteAllByUserId(userId)
             throw new ApiError(
                 StatusCodes.UNAUTHORIZED,
                 'auth.refresh_token.invalid_token'
             )
+        }
+        // Bước 04: Nếu hợp lệ thì tìm user tương ứng với token, nếu không tìm thấy hoặc user đã bị khóa thì trả về lỗi
+        const user = await userRepository.findById(userId)
+        if (!user || !user.isActive) {
+            throw new ApiError(
+                StatusCodes.UNAUTHORIZED,
+                'auth.refresh_token.invalid_token'
+            )
+        }
         const userInfo = {
-            _id: String(user._id),
+            userId: String(user._id),
             email: user.email,
             role: user.role
         }
-        // Bước 04: Nếu hợp lệ thì tạo ra 1 cặp accessToken mới và refreshToken mới
+        // Bước 05: Nếu hợp lệ thì xóa token cũ và tạo mới, lưu vào DB
+        await refreshTokenRepository.deleteRefreshTokenById(
+            String(tokenDoc._id)
+        )
+
+        const newJti = crypto.randomUUID()
+
         const refreshToken = await JwtProvider.generateToken(
-            { _id: String(user._id) },
+            { userId: String(user._id), jti: newJti },
             env.REFRESH_TOKEN_SECRET_SIGNATURE,
             env.REFRESH_TOKEN_LIFE
         )
+
         const hashedRefreshToken = await bcrypt.hash(refreshToken, 10)
 
-        await userRepository.updateRefreshToken(
-            String(user._id),
-            hashedRefreshToken
+        const refreshTokenInfo = {
+            ...dataRefreshToken,
+            token: hashedRefreshToken,
+            jti: newJti
+        }
+
+        await refreshTokenRepository.insertRefreshToken(
+            refreshTokenInfo,
+            String(user._id)
         )
-        // Buoc 02, Tao ra accessToken moi
+
         const accessToken = await JwtProvider.generateToken(
             userInfo,
             env.ACCESS_TOKEN_SECRET_SIGNATURE,
             env.ACCESS_TOKEN_LIFE
         )
+
         return {
             accessToken
         }

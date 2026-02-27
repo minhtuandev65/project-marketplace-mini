@@ -2,10 +2,9 @@ import { ObjectId } from 'mongodb'
 import { getUserCollection } from '~/models/users.model'
 
 const baseFilter = { _destroy: false }
-const now = new Date()
 
 /* Dùng cho đăng nhập */
-const findAccountForLogin = async (email) => {
+const findUserForLogin = async (email) => {
     return await getUserCollection().findOne(
         { email, ...baseFilter },
         {
@@ -48,19 +47,10 @@ const updateVerified = async (email) => {
         {
             $set: {
                 isActive: true,
-                latestActiveAt: now,
-                updatedAt: now
+                latestActiveAt: new Date(),
+                updatedAt: new Date()
             },
             $unset: { verifyToken: '' }
-        }
-    )
-}
-/* Dùng để cập nhật refresh token */
-const updateRefreshToken = async (id, refreshToken) => {
-    return await getUserCollection().updateOne(
-        { _id: new ObjectId(id), ...baseFilter, isActive: true },
-        {
-            $set: { refreshToken }
         }
     )
 }
@@ -102,13 +92,12 @@ const hardDeleteExpired = async () => {
 }
 
 export const userRepository = {
-    findAccountForLogin,
+    findUserForLogin,
     existsEmail,
     findAccountVerified,
     findById,
     create,
     softDelete,
     hardDeleteExpired,
-    updateVerified,
-    updateRefreshToken
+    updateVerified
 }

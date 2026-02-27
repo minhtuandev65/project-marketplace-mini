@@ -4,13 +4,26 @@ import ApiError from '~/shared/utils/ApiError'
 import { env } from '~/config/env/environment'
 import ms from 'ms'
 import { LOGIN_SCHEMA } from '../../validators/user.login.schema'
+import UAParser from 'ua-parser-js'
 
 export const login = async (req, res) => {
     try {
-        const payload = await LOGIN_SCHEMA.validateAsync(req.body, {
+        const parser = new UAParser(req.headers['user-agent'])
+        const ua = parser.getResult()
+        const deviceInfo = {
+            browser: ua.browser.name,
+            os: ua.os.name,
+            device: ua.device.type || 'desktop'
+        }
+        const dataRefreshToken = {
+            ...deviceInfo,
+            ipAddress: req.ip
+        }
+        const payloadLogin = await LOGIN_SCHEMA.validateAsync(req.body, {
             abortEarly: false
         })
-        const result = await servicesAuth.login(payload)
+
+        const result = await servicesAuth.login(payloadLogin, dataRefreshToken)
         const { refreshToken, ...data } = result
         const isProduction = env.BUILD_MODE === 'production'
 

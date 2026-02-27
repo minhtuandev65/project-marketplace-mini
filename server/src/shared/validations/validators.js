@@ -1,6 +1,5 @@
 export const OBJECT_ID_RULE = /^[0-9a-fA-F]{24}$/
-export const OBJECT_ID_RULE_MESSAGE =
-    'Your string fails to match the Object Id pattern!'
+export const OBJECT_ID_RULE_MESSAGE = 'schema.users.id.invalid'
 export const FIELD_REQUIRED_MESSAGE = 'schema.users.failed.required'
 export const EMAIL_RULE = /^\S+@\S+\.\S+$/
 export const EMAIL_RULE_MESSAGE = 'schema.users.email.invalid'
@@ -20,4 +19,5 @@ export const SLUG_RULE_MESSAGE = 'schema.projects.slug.invalid'
 
 export const URL_RULE =
     /^(https?:\/\/)?([\w\-])+\.{1}([a-zA-Z]{2,63})([\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/
+
 export const URL_RULE_MESSAGE = 'schema.projects.url.invalid'

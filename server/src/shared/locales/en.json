@@ -65,6 +65,10 @@
             "password": {
                 "required": "Password is required",
                 "invalid": "Password must include at least 1 letter, a number, and at least 8 characters."
+            },
+            "id": {
+                "invalid": "Your string fails to match the Object Id pattern!",
+                "required": "ID is required."
             }
         },
         "projects": {

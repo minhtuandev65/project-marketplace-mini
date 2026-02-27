@@ -1,12 +1,19 @@
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '~/shared/utils/ApiError'
+import { servicesAuth } from '../../services'
+import { REFRESHTOKEN_SCHEMA } from '../../validators/user.refreshToken.schema'
 
 export const logout = async (req, res) => {
     try {
-        const refreshToken = req.cookies.refreshToken
+        const { refreshToken } = req.cookies
+        const payload = await REFRESHTOKEN_SCHEMA.validateAsync(
+            { refreshToken },
+            { abortEarly: false }
+        )
+        await servicesAuth.logout(payload.refreshToken)
         res.clearCookie('refreshToken')
 
-        res.status(StatusCodes.OK).json({
+        res.status(StatusCodes.NO_CONTENT).json({
             status: 'success',
             message: req.t('auth.logout.successfully'),
             loggedOut: true

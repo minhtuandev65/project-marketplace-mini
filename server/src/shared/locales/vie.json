@@ -23,7 +23,8 @@
         "refresh_token": {
             "successfully": "Làm mới token thành công.",
             "failed": "Làm mới token thất bại. Vui lòng đăng nhập lại.",
-            "invalid_token": "Token làm mới không hợp lệ hoặc đã hết hạn. Vui lòng đăng nhập lại."
+            "invalid_token": "Token làm mới không hợp lệ hoặc đã hết hạn. Vui lòng đăng nhập lại.",
+            "reuse_detected": "Phát hiện token đã bị sử dụng lại. Tất cả token làm mới của bạn đã bị thu hồi. Vui lòng đăng nhập lại."
         },
         "logout": {
             "successfully": "Đăng xuất thành công.",
@@ -66,6 +67,9 @@
             "password": {
                 "required": "Mật khẩu là bắt buộc",
                 "invalid": "Mật khẩu phải chứa ít nhất 1 chữ cái, 1 số, và ít nhất 8 ký tự."
+            },"id": {
+                "invalid": "Chuỗi của bạn không khớp với mẫu Object Id!",
+                "required": "ID là bắt buộc."
             }
         },
         "projects": {

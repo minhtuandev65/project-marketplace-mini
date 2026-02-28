@@ -2,12 +2,15 @@ import { StatusCodes } from 'http-status-codes'
 import { servicesAuth } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
 import { REGISTER_SCHEMA } from '../../validators/user.register.schema'
+import Joi from 'joi'
 
 export const register = async (req, res) => {
     try {
         const payload = await REGISTER_SCHEMA.validateAsync(req.body, {
-            abortEarly: false
+            abortEarly: false,
+            stripUnknown: true
         })
+
         await servicesAuth.register(payload)
 
         res.status(StatusCodes.CREATED).json({
@@ -16,7 +19,12 @@ export const register = async (req, res) => {
         })
     } catch (error) {
         const { t } = req
-
+        if (error instanceof Joi.ValidationError) {
+            throw new ApiError(
+                StatusCodes.BAD_REQUEST,
+                error.details.map((d) => d.message)
+            )
+        }
         if (error instanceof ApiError) {
             const message = Array.isArray(error.message)
                 ? error.message.map((key) => t(key))

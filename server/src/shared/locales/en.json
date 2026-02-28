@@ -16,17 +16,27 @@
         "verify_email": {
             "successfully": "Email verification successfully. You can now login and use our services.",
             "failed": "Email verification failed. Please check the verification link or contact our support team.",
-            "invalid_token": "Invalid or expired verification token. Please request a new verification email.",
-            "email_not_found": "Email not found in the system. Please register an account before verifying your email.",
             "already_verified": "Email has already been verified. You can log in and use our services."
         },
         "refresh_token": {
             "successfully": "Token refreshed successfully.",
-            "failed": "Token refresh failed. Please log in again."
+            "failed": "Token refresh failed. Please log in again.",
+            "invalid_token": "Invalid or expired refresh token. Please log in again.",
+            "reuse_detected": "Detected refresh token reuse. All your refresh tokens have been revoked. Please log in again."
         },
         "logout": {
             "successfully": "Logout successfully.",
-            "failed": "Logout failed. Please try again."
+            "failed": "Logout failed. Please try again.",
+            "invalid_token": "Invalid or expired token. Please log in again."
+        },
+        "forgot_password": {
+            "successfully": "Password reset request successfully. Please check your email for further instructions.",
+            "failed": "Password reset request failed. Please try again."
+        },
+        "reset_password": {
+            "successfully": "Password reset successfully.",
+            "failed": "Password reset failed. Please try again.",
+            "invalid_token": "Invalid or expired password reset token. Please try again."
         }
     },
     "projects": {

@@ -13,7 +13,7 @@ export const register = async (reqData) => {
     try {
         const rawUserData = {
             email: reqData.email,
-            password: await bcrypt.hash(reqData.password, 8),
+            password: await bcrypt.hash(reqData.password, 10),
             username: reqData.email.split('@')[0],
             fullName: reqData.fullName ?? null,
             verifyToken: uuidv4()
@@ -25,9 +25,12 @@ export const register = async (reqData) => {
         )
 
         const result = await userRepository.create(userData)
+
         const verificationLink = `${WEBSITE_DOMAIN}/account/verification?email=${userData.email}&token=${userData.verifyToken}`
+
         const customSubject =
             'MT-Marketplace system: Please verify your email before using our services!'
+
         const htmlContent = templates.verifyEmailTemplate({
             fullName: userData.fullName,
             verificationLink: verificationLink

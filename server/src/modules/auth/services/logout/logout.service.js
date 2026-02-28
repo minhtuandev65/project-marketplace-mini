@@ -11,14 +11,18 @@ export const logout = async (refreshTokenFromCookie) => {
             refreshTokenFromCookie,
             env.REFRESH_TOKEN_SECRET_SIGNATURE
         )
+
         const { userId, jti } = refreshTokenDecoded
+
         if (!userId || !jti) {
             throw new ApiError(
                 StatusCodes.UNAUTHORIZED,
                 'auth.logout.invalid_token'
             )
         }
+
         const deleted = await refreshTokenRepository.logout(userId, jti)
+
         return deleted.deletedCount > 0
     } catch (error) {
         if (error instanceof Joi.ValidationError) {

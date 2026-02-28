@@ -5,29 +5,27 @@ import Joi from 'joi'
 
 export const verifyEmail = async (reqData) => {
     try {
-        const { email, token } = reqData
-        const accountVerified = await userRepository.findAccountVerified(email)
+        const { email } = reqData
 
-        if (!accountVerified) {
-            throw new ApiError(
-                StatusCodes.NOT_FOUND,
-                'auth.verify_email.email_not_found'
-            )
-        }
-        if (accountVerified.isActive) {
-            throw new ApiError(
-                StatusCodes.NOT_ACCEPTABLE,
-                'auth.verify_email.already_verified'
-            )
-        }
-        if (accountVerified.verifyToken !== token) {
-            throw new ApiError(
-                StatusCodes.BAD_REQUEST,
-                'auth.verify_email.invalid_token'
-            )
+        const result = await userRepository.updateVerified(reqData)
+
+        if (result.modifiedCount === 0) {
+            const accountVerified =
+                await userRepository.findAccountVerified(email)
+            if (accountVerified) {
+                throw new ApiError(
+                    StatusCodes.CONFLICT,
+                    'auth.verify_email.already_verified'
+                )
+            } else {
+                throw new ApiError(
+                    StatusCodes.BAD_REQUEST,
+                    'auth.verify_email.failed'
+                )
+            }
         }
 
-        await userRepository.updateVerified(email)
+        return true
     } catch (error) {
         if (error instanceof Joi.ValidationError) {
             throw new ApiError(

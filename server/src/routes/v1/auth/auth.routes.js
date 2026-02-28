@@ -14,4 +14,7 @@ Router.route('/refresh-token').post(isAuthorized, controllersAuth.refreshToken)
 
 Router.route('/logout').post(isAuthorized, controllersAuth.logout)
 
+Router.route('/forgot-password').post(controllersAuth.forgotPassword)
+
+Router.route('/reset-password').post(controllersAuth.resetPassword)
 export const auth = Router

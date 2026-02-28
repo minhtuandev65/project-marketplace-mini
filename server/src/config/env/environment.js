@@ -37,5 +37,7 @@ export const env = {
 
     ELASTICSEARCH_API_KEY: process.env.ELASTICSEARCH_API_KEY,
 
-    REDIS_URL: process.env.REDIS_URL
+    REDIS_URL: process.env.REDIS_URL,
+
+    SUPPORT_EMAIl: process.env.SUPPORT_EMAIl
 }

@@ -50,7 +50,7 @@ export const refreshToken = async (
         )
 
         if (!isValid) {
-            await refreshTokenRepository.deleteAllByUserId(userId)
+            await refreshTokenRepository.deleteAllRefreshTokensByUserId(userId)
             throw new ApiError(
                 StatusCodes.UNAUTHORIZED,
                 'auth.refresh_token.invalid_token'
@@ -102,7 +102,8 @@ export const refreshToken = async (
         )
 
         return {
-            accessToken
+            accessToken,
+            refreshToken
         }
     } catch (error) {
         if (error instanceof Joi.ValidationError) {

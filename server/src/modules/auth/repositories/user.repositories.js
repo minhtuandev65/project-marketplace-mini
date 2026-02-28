@@ -19,31 +19,75 @@ const findUserForLogin = async (email) => {
         }
     )
 }
-/* Kiểm tra tồn tại không trả về document */
-const existsEmail = async (email) => {
-    return (
-        (await getUserCollection().countDocuments(
-            { email, ...baseFilter, isActive: true },
-            { limit: 1 }
-        )) > 0
-    )
-}
 /* Dùng để kiểm tra verify email */
 const findAccountVerified = async (email) => {
-    return await getUserCollection().findOne(
-        { email, ...baseFilter, isActive: false },
+    const exist = await getUserCollection().findOne(
+        { email, ...baseFilter, isActive: true },
         {
             projection: {
-                isActive: 1,
-                verifyToken: 1
+                _id: 1
+            }
+        }
+    )
+    return !!exist
+}
+/* Dùng để kiểm tra tài khoản quên mật khẩu */
+const findAccountForgotPassword = async (email) => {
+    return await getUserCollection().findOne(
+        { email, ...baseFilter },
+        {
+            projection: {
+                _id: 1,
+                resetPasswordExpireAt: 1,
+                resetPasswordRequestedAt: 1
             }
         }
     )
 }
-/* Dùng để cập nhật thông tin đã verify email */
-const updateVerified = async (email) => {
+const updateTokenForgotPassword = async (id, token) => {
     return await getUserCollection().updateOne(
-        { email, ...baseFilter },
+        { _id: new ObjectId(id), ...baseFilter },
+        {
+            $set: {
+                resetPasswordToken: token,
+                resetPasswordExpireAt: Date.now() + 15 * 60 * 1000,
+                resetPasswordRequestedAt: Date.now()
+            }
+        }
+    )
+}
+/* reset password */
+const updatePassword = async (data) => {
+    return await getUserCollection().findOneAndUpdate(
+        {
+            ...baseFilter,
+            resetPasswordToken: data?.token,
+            resetPasswordExpireAt: { $gt: Date.now() }
+        },
+        {
+            $set: {
+                password: data?.newPassword,
+                updatedAt: new Date()
+            },
+            $unset: {
+                resetPasswordToken: '',
+                resetPasswordExpireAt: '',
+                resetPasswordRequestedAt: ''
+            }
+        },
+        {
+            projection: {
+                _id: 1
+            },
+            returnDocument: 'after'
+        }
+    )
+}
+/* Dùng để cập nhật thông tin đã verify email */
+const updateVerified = async (reqData) => {
+    const { email, token } = reqData
+    return await getUserCollection().updateOne(
+        { email, ...baseFilter, verifyToken: token, isActive: false },
         {
             $set: {
                 isActive: true,
@@ -93,11 +137,13 @@ const hardDeleteExpired = async () => {
 
 export const userRepository = {
     findUserForLogin,
-    existsEmail,
     findAccountVerified,
     findById,
     create,
     softDelete,
     hardDeleteExpired,
-    updateVerified
+    updateVerified,
+    findAccountForgotPassword,
+    updateTokenForgotPassword,
+    updatePassword
 }

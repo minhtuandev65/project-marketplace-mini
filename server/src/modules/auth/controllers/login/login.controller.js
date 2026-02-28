@@ -5,6 +5,7 @@ import { env } from '~/config/env/environment'
 import ms from 'ms'
 import { LOGIN_SCHEMA } from '../../validators/user.login.schema'
 import UAParser from 'ua-parser-js'
+import Joi from 'joi'
 
 export const login = async (req, res) => {
     try {
@@ -20,7 +21,8 @@ export const login = async (req, res) => {
             ipAddress: req.ip
         }
         const payloadLogin = await LOGIN_SCHEMA.validateAsync(req.body, {
-            abortEarly: false
+            abortEarly: false,
+            stripUnknown: true
         })
 
         const result = await servicesAuth.login(payloadLogin, dataRefreshToken)
@@ -40,7 +42,12 @@ export const login = async (req, res) => {
         })
     } catch (error) {
         const { t } = req
-
+        if (error instanceof Joi.ValidationError) {
+            throw new ApiError(
+                StatusCodes.BAD_REQUEST,
+                error.details.map((d) => d.message)
+            )
+        }
         if (error instanceof ApiError) {
             const message = Array.isArray(error.message)
                 ? error.message.map((key) => t(key))

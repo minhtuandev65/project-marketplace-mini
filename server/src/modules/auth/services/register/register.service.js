@@ -1,10 +1,10 @@
 import bcrypt from 'bcryptjs'
 import { v4 as uuidv4 } from 'uuid'
-import { userRepository } from '../../repositories/user.repositories'
+import { authRepository } from '../../repositories/auth.repositories'
 import ApiError from '~/shared/utils/ApiError'
 import { StatusCodes } from 'http-status-codes'
 import Joi from 'joi'
-import { USER_COLLECTION_SCHEMA } from '../../validators/user.collection.schema'
+import { USER_COLLECTION_SCHEMA } from '../../validators/auth.collection.schema'
 import { WEBSITE_DOMAIN } from '~/shared/utils/constants'
 import { ResendProvider } from '~/shared/providers/email/ResendProvider'
 import { templates } from '~/shared/templates'
@@ -24,7 +24,7 @@ export const register = async (reqData) => {
             { abortEarly: false }
         )
 
-        const result = await userRepository.create(userData)
+        const result = await authRepository.create(userData)
 
         const verificationLink = `${WEBSITE_DOMAIN}/account/verification?email=${userData.email}&token=${userData.verifyToken}`
 

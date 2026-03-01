@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes'
 import { servicesAuth } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
-import { REGISTER_SCHEMA } from '../../validators/user.register.schema'
+import { REGISTER_SCHEMA } from '../../validators/auth.register.schema'
 import Joi from 'joi'
 
 export const register = async (req, res) => {

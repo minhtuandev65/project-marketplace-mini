@@ -5,7 +5,7 @@ import { JwtProvider } from '~/shared/providers/token/JwtProvider'
 import ApiError from '~/shared/utils/ApiError'
 import bcrypt from 'bcryptjs'
 import { refreshTokenRepository } from '../../repositories/refreshToken.repositories'
-import { userRepository } from '../../repositories/user.repositories'
+import { authRepository } from '../../repositories/auth.repositories'
 
 export const refreshToken = async (
     refreshTokenFromCookie,
@@ -32,6 +32,7 @@ export const refreshToken = async (
             userId,
             jti
         )
+
         // 🚨 Reuse detection
         if (!tokenDoc) {
             // Token hợp lệ về mặt chữ ký nhưng không tồn tại trong DB
@@ -57,7 +58,8 @@ export const refreshToken = async (
             )
         }
         // Bước 04: Nếu hợp lệ thì tìm user tương ứng với token, nếu không tìm thấy hoặc user đã bị khóa thì trả về lỗi
-        const user = await userRepository.findById(userId)
+        const user = await authRepository.findById(userId)
+
         if (!user || !user.isActive) {
             throw new ApiError(
                 StatusCodes.UNAUTHORIZED,
@@ -70,7 +72,7 @@ export const refreshToken = async (
             role: user.role
         }
         // Bước 05: Nếu hợp lệ thì xóa token cũ và tạo mới, lưu vào DB
-        await refreshTokenRepository.deleteRefreshTokenById(
+        await refreshTokenRepository.deleteAllRefreshTokensByUserId(
             String(tokenDoc._id)
         )
 

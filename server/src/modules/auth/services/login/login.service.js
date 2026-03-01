@@ -2,14 +2,14 @@ import ApiError from '~/shared/utils/ApiError'
 import { StatusCodes } from 'http-status-codes'
 import bcrypt from 'bcryptjs'
 import Joi from 'joi'
-import { userRepository } from '../../repositories/user.repositories'
+import { authRepository } from '../../repositories/auth.repositories'
 import { JwtProvider } from '~/shared/providers/token/JwtProvider'
 import { env } from '~/config/env/environment'
 import { refreshTokenRepository } from '../../repositories/refreshToken.repositories'
 
 export const login = async (reqData, dataRefreshToken) => {
     try {
-        const user = await userRepository.findUserForLogin(reqData.email)
+        const user = await authRepository.findUserForLogin(reqData.email)
         const userId = String(user?._id)
         if (!user) {
             throw new ApiError(StatusCodes.UNAUTHORIZED, 'auth.login.incorrect')

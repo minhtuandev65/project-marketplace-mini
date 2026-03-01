@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes'
 import { servicesAuth } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
-import { VERIFY_EMAIL_SCHEMA } from '../../validators/user.verify.schema'
+import { VERIFY_EMAIL_SCHEMA } from '../../validators/auth.verify.schema'
 import Joi from 'joi'
 
 export const verifyEmail = async (req, res) => {

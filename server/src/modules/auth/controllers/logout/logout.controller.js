@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '~/shared/utils/ApiError'
 import { servicesAuth } from '../../services'
-import { REFRESHTOKEN_SCHEMA } from '../../validators/user.refreshToken.schema'
+import { REFRESHTOKEN_SCHEMA } from '../../validators/auth.refreshToken.schema'
 import Joi from 'joi'
 
 export const logout = async (req, res) => {

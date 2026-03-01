@@ -40,7 +40,7 @@ export const hasRole = (role) => {
     return (req, res, next) => {
         const user = req.payload
 
-        if (user.role != role) {
+        if (auth.role != role) {
             return res
                 .status(StatusCodes.FORBIDDEN)
                 .send({ message: 'Sorry you do not have access' })

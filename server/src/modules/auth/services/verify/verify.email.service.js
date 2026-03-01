@@ -1,4 +1,4 @@
-import { userRepository } from '../../repositories/user.repositories'
+import { authRepository } from '../../repositories/auth.repositories'
 import ApiError from '~/shared/utils/ApiError'
 import { StatusCodes } from 'http-status-codes'
 import Joi from 'joi'
@@ -7,11 +7,11 @@ export const verifyEmail = async (reqData) => {
     try {
         const { email } = reqData
 
-        const result = await userRepository.updateVerified(reqData)
+        const result = await authRepository.updateVerified(reqData)
 
         if (result.modifiedCount === 0) {
             const accountVerified =
-                await userRepository.findAccountVerified(email)
+                await authRepository.findAccountVerified(email)
             if (accountVerified) {
                 throw new ApiError(
                     StatusCodes.CONFLICT,

@@ -1,4 +1,4 @@
-import { userRepository } from '../../repositories/user.repositories'
+import { authRepository } from '../../repositories/auth.repositories'
 import ApiError from '~/shared/utils/ApiError'
 import { StatusCodes } from 'http-status-codes'
 import Joi from 'joi'
@@ -11,7 +11,7 @@ export const forgotPassword = async (reqData) => {
     try {
         const { email } = reqData
 
-        const account = await userRepository.findAccountForgotPassword(email)
+        const account = await authRepository.findAccountForgotPassword(email)
         // Nếu không tìm thấy tài khoản, vẫn trả về thành công để tránh lộ thông tin về sự tồn tại của email
         if (!account) {
             return true
@@ -30,7 +30,7 @@ export const forgotPassword = async (reqData) => {
             .update(rawToken)
             .digest('hex')
 
-        await userRepository.updateTokenForgotPassword(
+        await authRepository.updateTokenForgotPassword(
             String(account._id),
             hashedToken
         )

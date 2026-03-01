@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes'
 import { servicesAuth } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
-import { REFRESHTOKEN_SCHEMA } from '../../validators/user.refreshToken.schema'
+import { REFRESHTOKEN_SCHEMA } from '../../validators/auth.refreshToken.schema'
 import UAParser from 'ua-parser-js'
 import { env } from '~/config/env/environment'
 import ms from 'ms'

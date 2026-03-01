@@ -3,7 +3,7 @@ import { servicesAuth } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
 import { env } from '~/config/env/environment'
 import ms from 'ms'
-import { LOGIN_SCHEMA } from '../../validators/user.login.schema'
+import { LOGIN_SCHEMA } from '../../validators/auth.login.schema'
 import UAParser from 'ua-parser-js'
 import Joi from 'joi'
 
@@ -24,7 +24,6 @@ export const login = async (req, res) => {
             abortEarly: false,
             stripUnknown: true
         })
-
         const result = await servicesAuth.login(payloadLogin, dataRefreshToken)
         const { refreshToken, ...data } = result
         const isProduction = env.BUILD_MODE === 'production'

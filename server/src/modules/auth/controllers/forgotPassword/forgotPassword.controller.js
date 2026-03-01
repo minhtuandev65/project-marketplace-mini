@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes'
 import { servicesAuth } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
-import { FORGOT_PASSWORD_SCHEMA } from '../../validators/user.forgotPassword.schema'
+import { FORGOT_PASSWORD_SCHEMA } from '../../validators/auth.forgotPassword.schema'
 import Joi from 'joi'
 
 export const forgotPassword = async (req, res) => {

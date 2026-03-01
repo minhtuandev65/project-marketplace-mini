@@ -1,4 +1,4 @@
-import { userRepository } from '../../repositories/user.repositories'
+import { authRepository } from '../../repositories/auth.repositories'
 import ApiError from '~/shared/utils/ApiError'
 import { StatusCodes } from 'http-status-codes'
 import Joi from 'joi'
@@ -20,7 +20,7 @@ export const resetPassword = async (reqData) => {
             token: hashedToken,
             newPassword: hashPassword
         }
-        const account = await userRepository.updatePassword(data)
+        const account = await authRepository.updatePassword(data)
 
         if (!account) {
             throw new ApiError(

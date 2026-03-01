@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes'
 import { servicesAuth } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
-import { RESET_PASSWORD_SCHEMA } from '../../validators/user.resetPassword.schema'
+import { RESET_PASSWORD_SCHEMA } from '../../validators/auth.resetPassword.schema'
 import Joi from 'joi'
 
 export const resetPassword = async (req, res) => {

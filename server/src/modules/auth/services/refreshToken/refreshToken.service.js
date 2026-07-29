@@ -72,7 +72,7 @@ export const refreshToken = async (
             role: user.role
         }
         // Bước 05: Nếu hợp lệ thì xóa token cũ và tạo mới, lưu vào DB
-        await refreshTokenRepository.deleteAllRefreshTokensByUserId(
+        await refreshTokenRepository.deleteRefreshTokenById(
             String(tokenDoc._id)
         )
 

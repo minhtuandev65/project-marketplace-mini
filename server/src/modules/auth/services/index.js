@@ -6,7 +6,7 @@ import { register } from './register/register.service'
 import { resetPassword } from './resetPassword/resetPassword.service'
 import { verifyEmail } from './verify/verify.email.service'
 
-export const servicesAuth = {
+export const authServices = {
     register,
     login,
     verifyEmail,

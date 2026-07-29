@@ -1,87 +1,237 @@
-### Bộ code base để bắt đầu học khóa Full Stack MERN Pro (VIẾT CÁC REST API CHUẨN CHỈNH) - Lập Trình qua dự án thực tế Trello Clone trên kênh YouTube TrungQuanDev của mình nhé các bạn!
-### Base project for my Full Stack MERN Pro Course - Build Trello App on YouTube!
+# Project Marketplace Mini Server
 
-- Playlist khóa Pro: https://www.youtube.com/playlist?list=PLP6tw4Zpj-RJP2-YrhtkWqObMQ-AA4TDy
+Backend service cho dự án `project-marketplace-mini`, xây dựng theo hướng module hóa với `Express`, `MongoDB`, `Redis`, `Elasticsearch` và các provider như `JWT`, `Resend`, `AWS S3`.
 
-- Playlist khóa Advanced: https://youtube.com/playlist?list=PLP6tw4Zpj-RJbPQfTZ0eCAXH_mHQiuf2G&si=zmt9y6TYo-e3sIwv
+Tài liệu này tập trung vào:
+- mục tiêu dự án
+- cách cài đặt và chạy backend
+- biến môi trường cần chuẩn bị
+- các API đang được expose ở thời điểm hiện tại
 
-### Hướng dẫn clone Repo code này về máy các bạn chuẩn nhất ở video này:
+> Ghi chú: README này mô tả trạng thái hiện tại của backend và phần định hướng phát triển gần nhất. Các tài liệu phân tích chi tiết hơn nằm trong thư mục `docs-output/`.
 
-- Cấu trúc dự án nâng cao, chuẩn thực tế, có Babel, ESLint...vv | NodeJS + MongoDB. Link: https://youtu.be/8hhXamKIdsY
+## Tổng quan
 
----
+`project-marketplace-mini` là một backend cho sàn thương mại điện tử mini, nơi:
+- người dùng có thể đăng ký, đăng nhập và xác thực email
+- buyer có thể gửi yêu cầu trở thành seller
+- seller sẽ gắn với hồ sơ kinh doanh và shop
+- hệ thống hỗ trợ tìm kiếm sản phẩm qua Elasticsearch
+- nền tảng được chuẩn bị để mở rộng thêm sản phẩm, giỏ hàng, đơn hàng và thanh toán
 
-### 🎁 DOWNLOAD FULL SOURCE CODE của toàn bộ dự án (Pro & Advanced) cũng như Donate ủng hộ mình ly cafe nếu bạn muốn 🤝
+Hiện tại, phần code đang rõ nhất ở các module:
+- `auth`
+- `sellers`
+- `settings`
+- `elasticsearch`
 
-👉 Đầu tiên cần phải làm rõ một điều: Mình KHÔNG BÁN CODE cũng như KHÔNG BÁN KHÓA HỌC gì ở đây hết. Bởi vì mình đã cung cấp đầy đủ mọi tài nguyên cần thiết cho trường hợp bạn muốn học FREE Miễn Phí từ đầu rồi.
+Module `shops` đang trong quá trình hoàn thiện.
 
-👉 ĐIỀU QUAN TRỌNG TIẾP THEO: Bạn cần phải hiểu rõ về lý do tại sao mình lại chia ra 3 gói Donate cũng như sự khác nhau giữa 3 gói này là gì. Mọi thông tin mình đều đã công khai ở bài viết trên blog chính chủ từ mình nhé, bởi vì nội dung khá dài. Bạn nên dành thời gian đọc nó trước khi bắt đầu khóa học cực kỳ chất lượng này.
+## Kiến trúc chính
 
-👉 Link bài viết: 👇
+Backend đang đi theo cấu trúc:
+- `routes` nhận request và định tuyến theo version
+- `controllers` xử lý request/response
+- `services` xử lý nghiệp vụ
+- `repositories` làm việc với dữ liệu
+- `models` ánh xạ collection MongoDB
+- `shared` chứa middleware, provider, helper, template và constant dùng chung
 
-🌐 https://trungquandev.com/khoa-hoc-lap-trinh-full-stack-mern-100-du-an-thuc-te-chat-luong/
+Entry point hiện tại là:
+- `src/server.js`
 
-**🥉 FREE PACK (No Sponsor)**
+API version đang được mount dưới:
+- `/v1`
 
-• 🌟 Download on Ko-fi: https://ko-fi.com/s/8e56e2c5d0
+## Công nghệ sử dụng
 
-• 🌟 Download on Buy Me a Coffee: https://buymeacoffee.com/codetq/e/318762
+- Node.js `20.x`
+- npm `11.x`
+- Express
+- MongoDB
+- Redis
+- Elasticsearch
+- Babel
+- Joi
+- JWT
+- Resend
+- AWS S3 SDK
 
-**🥈 GOLD PACK (Gold Sponsor)**
+## Yêu cầu trước khi chạy
 
-• 🌟 Download on Ko-fi: https://ko-fi.com/s/e41c325ca4
+Bạn nên chuẩn bị sẵn:
+- Node.js `20.x`
+- npm `11.x`
+- MongoDB instance
+- Redis instance
+- Elasticsearch instance
+- Resend API key nếu muốn chạy luồng gửi email thật
+- AWS S3 credentials nếu muốn dùng luồng upload tài nguyên thật
 
-• 🌟 Download on Buy Me a Coffee: https://buymeacoffee.com/codetq/e/191152
+## Cài đặt dự án
 
-**🥇 DIAMOND PACK (Diamond Sponsor - VIP)**
+Từ thư mục gốc repo:
 
-• 🌟 Download on Ko-fi: https://ko-fi.com/s/27670843df
-
-• 🌟 Download on Buy Me a Coffee: https://buymeacoffee.com/codetq/e/318750
-
-**🏆 HOẶC NẾU BẠN KHÔNG CÓ THẺ VISA THANH TOÁN QUỐC TẾ THÌ CÓ THỂ LIÊN HỆ TRỰC TIẾP VỚI MÌNH TẠI ĐÂY ĐỂ LẤY TÀI NGUYÊN HỌC TẬP NHÉ 👇**
-
-**🌐 Facebook TrungQuanDev: 👉 https://facebook.com/trungquandev**
-
-**👑 Lưu ý: Video hướng dẫn chi tiết cách Install Source Code (Pro & Advanced) đều đã có trong 2 Playlists của khóa học rồi nhé.**
-
----
-
-### Requirements - Thông tin của bộ Code Base này - Chuẩn các phiên bản dưới đây để bắt đầu học: (Semantic Versioning)
-
+```bash
+cd server
+npm install
 ```
-* nodejs >= 18.16.0
-* npm = v9.8.1
-* yarn = v1.22.19
 
-* "express": "^4.18.2"
-* "nodemon": "^3.0.1"
-* "eslint": "^8.47.0"
+## Biến môi trường
 
-* "@babel/runtime": "^7.22.10"
-* "@babel/cli": "^7.22.10"
-* "@babel/core": "^7.22.10"
-* "@babel/eslint-parser": "^7.22.10"
-* "@babel/node": "^7.22.10"
-* "@babel/plugin-transform-runtime": "^7.22.10"
-* "@babel/preset-env": "^7.22.10"
-* "babel-plugin-module-resolver": "^5.0.0"
+Backend đang đọc cấu hình từ `src/config/env/environment.js`. Bạn cần có file `.env` trong thư mục `server/`.
+
+Các biến môi trường hiện đang được sử dụng:
+
+```env
+MONGODB_URI=
+DATABASE_NAME=
+
+LOCAL_DEV_APP_HOST=localhost
+LOCAL_DEV_APP_PORT=8017
+
+BUILD_MODE=dev
+AUTHOR=Dev_Tuan
+
+WEBSITE_DOMAIN_DEVELOPMENT=http://localhost:3000
+WEBSITE_DOMAIN_PRODUCTION=
+
+RESEND_API_KEY=
+ADMIN_EMAIL_ADDRESS=
+ADMIN_EMAIL_NAME=
+
+ACCESS_TOKEN_SECRET_SIGNATURE=
+ACCESS_TOKEN_LIFE=15m
+
+REFRESH_TOKEN_SECRET_SIGNATURE=
+REFRESH_TOKEN_LIFE=2d
+
+FORGOT_PASSWORD_TOKEN_LIFE=15m
+
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_REGION=
+S3_BUCKET=
+
+DEFAULT_AVATAR=
+DEFAULT_LOGO_SHOP=
+
+ELASTICSEARCH_NODE=
+ELASTICSEARCH_API_KEY=
+
+REDIS_URL=
+
+SUPPORT_EMAIl=
 ```
 
-### About Me - Thông tin về mình:
+> Ghi chú:
+> - Không commit file `.env` chứa secret thật.
+> - Nếu chỉ muốn chạy backend cục bộ để đọc code, bạn vẫn nên điền tối thiểu MongoDB, Redis và các JWT secret.
 
-Author: **Trungquandev - Một Lập Trình Viên** && **CodeTQ - ASMR Programming**
+## Chạy dự án
 
-Blog: https://trungquandev.com/
+### Chạy môi trường development
 
-CV: https://cv.trungquandev.com/
+```bash
+cd server
+npm run dev
+```
 
-YouTube 01 (Trungquandev - Một Lập Trình Viên): https://www.youtube.com/@trungquandev
+### Build source
 
-YouTube 02 (CodeTQ - ASMR Programming): https://www.youtube.com/@code-tq
+```bash
+cd server
+npm run build
+```
 
-"Learning new everyday not the copycat of yesterday!"
+### Chạy bản build production
 
-"A bit of fragrance clings to the hand that gives flowers!"
+```bash
+cd server
+npm run start
+```
 
-Thanks for watching!
+### Kiểm tra lint
+
+```bash
+cd server
+npm run lint
+```
+
+### Chạy test
+
+```bash
+cd server
+npm run test
+```
+
+## Luồng khởi động hiện tại
+
+Khi chạy `npm run dev`, backend sẽ:
+- kết nối MongoDB
+- tạo unique index cho email người dùng
+- kết nối Redis
+- khởi tạo Express app
+- mount route `/v1`
+- bật middleware `cookie-parser`, `cors`, `express.json`, `i18next`
+
+## API hiện có
+
+Base path:
+
+```text
+/v1
+```
+
+### Health Check
+
+- `GET /v1/health`
+
+### Auth
+
+- `POST /v1/api/auth/register`
+- `POST /v1/api/auth/login`
+- `POST /v1/api/auth/verify-email`
+- `POST /v1/api/auth/refresh-token`
+- `POST /v1/api/auth/logout`
+- `POST /v1/api/auth/forgot-password`
+- `POST /v1/api/auth/reset-password`
+
+### Settings
+
+- `POST /v1/api/settings/language`
+
+### Seller
+
+- `POST /v1/api/seller`
+
+### Search
+
+- `GET /v1/api/search`
+
+## Gợi ý quy trình chạy local
+
+1. Tạo file `.env` trong thư mục `server`
+2. Điền các thông số MongoDB, Redis và JWT secret
+3. Cài package bằng `npm install`
+4. Chạy `npm run dev`
+5. Gọi `GET /v1/health` để kiểm tra server đã sẵn sàng
+
+## Trạng thái phát triển
+
+Backend hiện đang ở giai đoạn:
+- đã có nền tảng xác thực người dùng
+- đã có luồng đăng ký seller cơ bản
+- đã có tìm kiếm sản phẩm qua Elasticsearch
+- đã chuẩn bị khung cho shop, cart, order, payment
+
+Các tài liệu phân tích sâu hơn để tiếp tục hoàn thiện dự án nằm tại:
+- `docs-output/README.md`
+- `docs-output/01-project-summary.md`
+- `docs-output/02-modules-analysis.md`
+- `docs-output/03-use-cases.md`
+- `docs-output/04-use-case-diagram.mmd`
+- `docs-output/05-class-diagram.mmd`
+- `docs-output/06-complete-schemas.md`
+- `docs-output/07-project-brief.md`
+- `docs-output/07-project-brief.docx`

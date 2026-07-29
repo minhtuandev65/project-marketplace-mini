@@ -1,17 +1,13 @@
 import { StatusCodes } from 'http-status-codes'
-import { servicesAuth } from '../../services'
+import { authServices } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
-import { REGISTER_SCHEMA } from '../../validators/auth.register.schema'
 import Joi from 'joi'
 
 export const register = async (req, res) => {
     try {
-        const payload = await REGISTER_SCHEMA.validateAsync(req.body, {
-            abortEarly: false,
-            stripUnknown: true
-        })
+        const validatedBody = req.validated?.body || {}
 
-        await servicesAuth.register(payload)
+        await authServices.register(validatedBody)
 
         res.status(StatusCodes.CREATED).json({
             status: 'success',

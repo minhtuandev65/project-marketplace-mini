@@ -6,7 +6,7 @@ import { register } from './register/register.controller'
 import { resetPassword } from './resetPassword/resetPassword.controller'
 import { verifyEmail } from './verify/verify.email.controller'
 
-export const controllersAuth = {
+export const authControllers = {
     register,
     login,
     verifyEmail,

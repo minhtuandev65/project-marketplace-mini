@@ -1,31 +1,34 @@
 import { StatusCodes } from 'http-status-codes'
-import { servicesAuth } from '../../services'
+import { authServices } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
 import { env } from '~/config/env/environment'
 import ms from 'ms'
-import { LOGIN_SCHEMA } from '../../validators/auth.login.schema'
 import UAParser from 'ua-parser-js'
 import Joi from 'joi'
 
 export const login = async (req, res) => {
     try {
         const parser = new UAParser(req.headers['user-agent'])
+
         const ua = parser.getResult()
+
         const deviceInfo = {
             browser: ua.browser.name,
             os: ua.os.name,
             device: ua.device.type || 'desktop'
         }
+
         const dataRefreshToken = {
             ...deviceInfo,
             ipAddress: req.ip
         }
-        const payloadLogin = await LOGIN_SCHEMA.validateAsync(req.body, {
-            abortEarly: false,
-            stripUnknown: true
-        })
-        const result = await servicesAuth.login(payloadLogin, dataRefreshToken)
+
+        const validatedBody = req.validated?.body || {}
+
+        const result = await authServices.login(validatedBody, dataRefreshToken)
+
         const { refreshToken, ...data } = result
+
         const isProduction = env.BUILD_MODE === 'production'
 
         res.cookie('refreshToken', refreshToken, {
@@ -34,6 +37,7 @@ export const login = async (req, res) => {
             sameSite: isProduction ? 'None' : 'lax',
             maxAge: ms('2 days')
         })
+
         res.status(StatusCodes.OK).json({
             status: 'success',
             message: req.t('auth.login.successfully'),

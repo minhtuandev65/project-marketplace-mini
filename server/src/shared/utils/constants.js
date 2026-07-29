@@ -19,10 +19,35 @@ export const ROLE = {
     SELLER: 2,
     BUYER: 3
 }
+export const REGISTER_SELLER_STATUS = {
+    PENDING: 1,
+    APPROVED: 2,
+    REJECTED: 3
+}
+export const INDEX_NAME = {
+    SHOPS: 'shops',
+    PRODUCTS: 'products'
+}
 export const ORDER_STATUS = {
     PENDING: 1,
     PAID: 2,
     SHIPPING: 3,
     COMPLETED: 4,
     CANCELLED: 5
+}
+export const SHOP_STATUS = {
+    PENDING: 1,
+    APPROVED: 2,
+    REJECTED: 3
+}
+export const RATING = {
+    1: 1,
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5
+}
+export const SELLER_TYPE = {
+    INDIVIDUAL: 1, // cá nhân
+    BUSINESS: 2 //doanh nghiệp
 }

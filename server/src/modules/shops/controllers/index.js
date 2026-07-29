@@ -1,5 +1,3 @@
-
-
-export const shopsControllers = {
-
+export const shopControllers = {
+    // hẹn lần sau.......
 }

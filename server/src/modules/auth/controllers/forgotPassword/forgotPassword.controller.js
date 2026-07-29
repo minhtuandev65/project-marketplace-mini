@@ -1,17 +1,13 @@
 import { StatusCodes } from 'http-status-codes'
-import { servicesAuth } from '../../services'
+import { authServices } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
-import { FORGOT_PASSWORD_SCHEMA } from '../../validators/auth.forgotPassword.schema'
 import Joi from 'joi'
 
 export const forgotPassword = async (req, res) => {
     try {
-        const payload = await FORGOT_PASSWORD_SCHEMA.validateAsync(req.body, {
-            abortEarly: false,
-            stripUnknown: true
-        })
+        const validatedBody = req.validated?.body || {}
 
-        await servicesAuth.forgotPassword(payload)
+        await authServices.forgotPassword(validatedBody)
 
         res.status(StatusCodes.OK).json({
             status: 'success',

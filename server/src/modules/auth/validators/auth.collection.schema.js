@@ -7,7 +7,7 @@ export const USER_COLLECTION_SCHEMA = Joi.object({
     username: Joi.string().required(),
     fullName: Joi.string().allow(null),
 
-    role: Joi.string()
+    role: Joi.number()
         .valid(...Object.values(ROLE))
         .default(ROLE.BUYER),
 

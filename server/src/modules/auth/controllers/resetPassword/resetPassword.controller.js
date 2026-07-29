@@ -1,17 +1,13 @@
 import { StatusCodes } from 'http-status-codes'
-import { servicesAuth } from '../../services'
+import { authServices } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
-import { RESET_PASSWORD_SCHEMA } from '../../validators/auth.resetPassword.schema'
 import Joi from 'joi'
 
 export const resetPassword = async (req, res) => {
     try {
-        const payload = await RESET_PASSWORD_SCHEMA.validateAsync(req.body, {
-            abortEarly: false,
-            stripUnknown: true
-        })
+        const validatedBody = req.validated?.body || {}
 
-        await servicesAuth.resetPassword(payload)
+        await authServices.resetPassword(validatedBody)
 
         res.status(StatusCodes.OK).json({
             status: 'success',

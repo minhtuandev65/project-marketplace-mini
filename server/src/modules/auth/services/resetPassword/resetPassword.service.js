@@ -28,7 +28,9 @@ export const resetPassword = async (reqData) => {
                 'auth.reset_password.invalid_token'
             )
         }
-        await refreshTokenRepository.deleteAllRefreshTokensByUserId(account._id)
+        await refreshTokenRepository.deleteAllRefreshTokensByUserId(
+            String(account._id)
+        )
         return true
     } catch (error) {
         if (error instanceof Joi.ValidationError) {

@@ -2,7 +2,7 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import exitHook from 'async-exit-hook'
-import { APIs_v1 } from './routes/v1'
+import { APIs_v1 } from './routes/v1.routes'
 import { env } from './config/env/environment'
 import { corsOptions } from './config/cors/cors'
 

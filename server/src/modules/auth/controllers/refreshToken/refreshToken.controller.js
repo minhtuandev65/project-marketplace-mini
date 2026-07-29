@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-import { servicesAuth } from '../../services'
+import { authServices } from '../../services'
 import ApiError from '~/shared/utils/ApiError'
 import { REFRESHTOKEN_SCHEMA } from '../../validators/auth.refreshToken.schema'
 import UAParser from 'ua-parser-js'
@@ -9,25 +9,25 @@ import Joi from 'joi'
 
 export const refreshToken = async (req, res) => {
     try {
-        const { refreshToken } = req.cookies
         const parser = new UAParser(req.headers['user-agent'])
+
         const ua = parser.getResult()
+
         const deviceInfo = {
             browser: ua.browser.name,
             os: ua.os.name,
             device: ua.device.type || 'desktop'
         }
+
         const dataRefreshToken = {
             ...deviceInfo,
             ipAddress: req.ip
         }
-        const payload = await REFRESHTOKEN_SCHEMA.validateAsync(
-            { refreshToken },
-            { abortEarly: false, stripUnknown: true }
-        )
 
-        const result = await servicesAuth.refreshToken(
-            payload.refreshToken,
+        const { refreshToken } = req.validated?.cookies || {}
+
+        const result = await authServices.refreshToken(
+            refreshToken,
             dataRefreshToken
         )
 

@@ -21,7 +21,7 @@ export const register = async (reqData) => {
 
         const userData = await USER_COLLECTION_SCHEMA.validateAsync(
             rawUserData,
-            { abortEarly: false }
+            { abortEarly: false, stripUnknown: true }
         )
 
         const result = await authRepository.create(userData)

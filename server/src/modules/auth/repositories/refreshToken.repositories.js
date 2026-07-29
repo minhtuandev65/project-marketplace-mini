@@ -2,6 +2,12 @@ import { ObjectId } from 'mongodb'
 import { getRefreshTokensCollection } from '~/models/refreshToken.model'
 
 const deleteAllRefreshTokensByUserId = async (id) => {
+    return await getRefreshTokensCollection().deleteMany({
+        userId: new ObjectId(id)
+    })
+}
+
+const deleteRefreshTokenById = async (id) => {
     return await getRefreshTokensCollection().deleteOne({
         _id: new ObjectId(id)
     })
@@ -38,6 +44,7 @@ const logout = async (id, jti) => {
 }
 export const refreshTokenRepository = {
     deleteAllRefreshTokensByUserId,
+    deleteRefreshTokenById,
     insertRefreshToken,
     findRefreshToken,
     deleteUponDetectionReuse,

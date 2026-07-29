@@ -1,5 +1,5 @@
-const { env } = require('../env/environment')
-const { MongoClient, ServerApiVersion } = require('mongodb')
+import { MongoClient, ServerApiVersion } from 'mongodb'
+import { env } from '../env/environment'
 
 let jobSeekDatabaseInstance = null
 

@@ -8,7 +8,7 @@ i18next
     .use(middleware.LanguageDetector)
     .init({
         fallbackLng: 'en', // ngôn ngữ mặc định
-        preload: ['en', 'vie'], // các ngôn ngữ có sẵn
+        preload: ['en', 'vie', 'ja'], // các ngôn ngữ có sẵn
         backend: {
             loadPath: path.join(
                 process.cwd(),

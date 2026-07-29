@@ -1,83 +1,109 @@
-{
+﻿{
     "settings": {
         "language_changed": "Language changed successfully."
     },
     "auth": {
         "register": {
-            "successfully": "New account registration successfully.",
-            "failed": "Register new account failed",
-            "email_exist": "Email already exists"
+            "successfully": "Account registered successfully.",
+            "failed": "Account registration failed.",
+            "email_exist": "Email already exists."
         },
         "login": {
-            "successfully": "Login successfully.",
-            "failed": "Login failed",
-            "incorrect": "Email or password is incorrect"
+            "successfully": "Login successful.",
+            "failed": "Login failed.",
+            "incorrect": "Email or password is incorrect."
         },
         "verify_email": {
-            "successfully": "Email verification successfully. You can now login and use our services.",
-            "failed": "Email verification failed. Please check the verification link or contact our support team.",
-            "already_verified": "Email has already been verified. You can log in and use our services."
+            "successfully": "Email verified successfully. You can now log in and use our services.",
+            "failed": "Email verification failed. Please check the verification link again or contact our support team.",
+            "already_verified": "This email has already been verified. You can now log in and use our services."
         },
         "refresh_token": {
             "successfully": "Token refreshed successfully.",
-            "failed": "Token refresh failed. Please log in again.",
-            "invalid_token": "Invalid or expired refresh token. Please log in again.",
-            "reuse_detected": "Detected refresh token reuse. All your refresh tokens have been revoked. Please log in again."
+            "failed": "Failed to refresh token. Please log in again.",
+            "invalid_token": "Refresh token is invalid or has expired. Please log in again.",
+            "reuse_detected": "Token reuse detected. All of your refresh tokens have been revoked. Please log in again."
         },
         "logout": {
-            "successfully": "Logout successfully.",
+            "successfully": "Logged out successfully.",
             "failed": "Logout failed. Please try again.",
-            "invalid_token": "Invalid or expired token. Please log in again."
+            "invalid_token": "Token is invalid or has expired. Please log in again."
         },
         "forgot_password": {
-            "successfully": "Password reset request successfully. Please check your email for further instructions.",
+            "successfully": "Password reset request submitted successfully. Please check your email for further instructions.",
             "failed": "Password reset request failed. Please try again."
         },
         "reset_password": {
             "successfully": "Password reset successfully.",
             "failed": "Password reset failed. Please try again.",
-            "invalid_token": "Invalid or expired password reset token. Please try again."
+            "invalid_token": "Reset password token is invalid or has expired. Please try again."
+        }
+    },
+    "users": {
+        "register_seller": {},
+        "not_found": "User not found."
+    },
+    "sellers": {
+        "register_seller": {
+            "successfully": "Seller registration successful.",
+            "failed": "Seller registration failed.",
+            "email_exist": "Email already exists.",
+            "email_not_match": "Email must match the registered email.",
+            "not_active": "The buyer account has not been activated yet. Please activate the buyer account before registering as a seller.",
+            "already_seller": "This buyer account has already been registered as a seller."
+        },
+        "list_sellers": {
+            "successfully": "Seller list retrieved successfully.",
+            "failed": "Failed to retrieve seller list."
+        },
+        "approve_seller": {
+            "successfully": "Seller approved successfully.",
+            "failed": "Failed to approve seller."
+        },
+        "detail_seller": {
+            "successfully": "Seller details retrieved successfully.",
+            "failed": "Failed to retrieve seller details."
         }
     },
     "projects": {
         "create": {
             "successfully": "Project created successfully.",
-            "failed": "Project creation failed"
+            "failed": "Failed to create project."
         },
         "list": {
-            "successfully": "Projects retrieved successfully.",
-            "failed": "Failed to retrieve projects"
+            "successfully": "Project list retrieved successfully.",
+            "failed": "Failed to retrieve project list."
         },
         "detail": {
             "successfully": "Project details retrieved successfully.",
-            "failed": "Failed to retrieve project details"
+            "failed": "Failed to retrieve project details."
         },
         "update": {
             "successfully": "Project updated successfully.",
-            "failed": "Project update failed"
+            "failed": "Failed to update project."
         },
         "remove": {
-            "successfully": "Project removed successfully.",
-            "failed": "Project removal failed"
+            "successfully": "Project deleted successfully.",
+            "failed": "Failed to delete project."
         },
-        "not_found": "Project not found"
+        "not_found": "Project does not exist."
     },
     "schema": {
         "users": {
             "email": {
-                "invalid": "Email is invalid. (example@example.com)",
-                "required": "Email is required"
+                "invalid": "Invalid email format. (example@example.com)",
+                "required": "Email is required."
             },
             "username": {
-                "required": "Username is required",
-                "invalid": "Name must not contain special characters or numbers."
+                "required": "Username is required.",
+                "invalid": "Username must not contain special characters or numbers."
             },
             "password": {
-                "required": "Password is required",
-                "invalid": "Password must include at least 1 letter, a number, and at least 8 characters."
+                "required": "Password is required.",
+                "invalid": "Password must contain at least 1 letter, 1 number, and be at least 8 characters long."
             },
             "id": {
-                "invalid": "Your string fails to match the Object Id pattern!",
+                "invalid": "Your string does not match the ObjectId format.",
                 "required": "ID is required."
             }
         },
@@ -99,22 +125,113 @@
                 "required": "Thumbnail is required."
             },
             "url": {
-                "invalid": "URL is invalid."
+                "invalid": "Invalid URL."
             },
             "techStack": {
                 "name": {
                     "required": "Technology name is required."
                 },
                 "type": {
-                    "invalid": "Technology type is invalid."
+                    "invalid": "Invalid technology type."
                 }
+            }
+        },
+        "sellers": {
+            "seller_type": {
+                "required": "Seller type is required."
+            },
+            "individual_identity": {
+                "full_name": {
+                    "required": "Full name is required."
+                },
+                "id_number": {
+                    "required": "Identification number is required.",
+                    "invalid": "Invalid identification number."
+                },
+                "id_card_images": {
+                    "invalid_url": "Invalid identification image URL.",
+                    "required": "Identification images are required.",
+                    "min": "At least 2 images are required (front and back of the ID card).",
+                    "max": "A maximum of 2 images is allowed (front and back of the ID card)."
+                },
+                "tax_code": {
+                    "invalid": "Invalid tax code."
+                }
+            },
+            "business_identity": {
+                "full_name": {
+                    "required": "Full name is required."
+                },
+                "tax_code": {
+                    "invalid": "Invalid tax code.",
+                    "required": "Tax code is required."
+                },
+                "business_license_url": {
+                    "required": "Business license is required."
+                },
+                "representative_name": {
+                    "required": "Representative name is required."
+                },
+                "representative_id_number": {
+                    "required": "Representative ID number is required.",
+                    "invalid": "Invalid representative ID number."
+                }
+            },
+            "register_seller": {
+                "user_id": {
+                    "required": "User ID is required."
+                },
+                "phone_number": {
+                    "required": "Phone number is required."
+                }
+            },
+            "shop_name": {
+                "required": "Shop name is required."
+            }
+        },
+        "shop": {
+            "name": {
+                "required": "Shop name is required."
+            },
+            "ownerId": {
+                "required": "Owner ID is required.",
+                "invalid": "Invalid owner ID."
+            },
+            "address": {
+                "required": "Shop address is required."
+            },
+            "phoneNumber": {
+                "required": "Shop phone number is required.",
+                "invalid": "Invalid shop phone number."
+            },
+            "logo": {
+                "required": "Shop logo is required."
+            },
+            "description": {
+                "required": "Shop description is required."
             }
         },
         "failed": {
             "required": "This field is required."
         }
     },
-    "users": {
-        "not_found": "User not found"
+    "search": {
+        "products": {
+            "successfully": "Product search completed successfully.",
+            "failed": "Product search failed."
+        }
+    },
+    "system": {
+        "health": {
+            "ready": "Ready to use."
+        },
+        "auth": {
+            "token_expired": "Token has expired.",
+            "need_refresh": "Token refresh is required.",
+            "unauthorized": "Unauthorized access.",
+            "token_not_found": "Token not found.",
+            "forbidden": "You do not have permission to access this resource.",
+            "invalid_token": "Invalid token."
+        }
     }
 }

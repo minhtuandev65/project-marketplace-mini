@@ -19,9 +19,17 @@ const verifyToken = async (token, secretKey) => {
         return JWT.verify(token, secretKey)
     } catch (error) {
         if (error.name === 'TokenExpiredError') {
-            throw new ApiError(StatusCodes.UNAUTHORIZED, 'Token expired')
+            const tokenExpiredError = new ApiError(
+                StatusCodes.UNAUTHORIZED,
+                'system.auth.token_expired'
+            )
+            tokenExpiredError.name = 'TOKEN_EXPIRED'
+            throw tokenExpiredError
         }
-        throw new ApiError(StatusCodes.UNAUTHORIZED, 'Invalid token')
+        throw new ApiError(
+            StatusCodes.UNAUTHORIZED,
+            'system.auth.invalid_token'
+        )
     }
 }
 

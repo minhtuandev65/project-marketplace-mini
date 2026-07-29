@@ -1,17 +1,17 @@
-{
+﻿{
     "settings": {
         "language_changed": "Thay đổi ngôn ngữ thành công."
     },
     "auth": {
         "register": {
-            "successfully": "Đăng ký tài khoản mới thành công",
-            "failed": "Đăng ký tài khoản mới thất bại",
-            "email_exist": "Email đã tồn tại"
+            "successfully": "Đăng ký tài khoản mới thành công.",
+            "failed": "Đăng ký tài khoản mới thất bại.",
+            "email_exist": "Email đã tồn tại."
         },
         "login": {
             "successfully": "Đăng nhập thành công.",
-            "failed": "Đăng nhập thất bại",
-            "incorrect": "Email hoặc mật khẩu không chính xác"
+            "failed": "Đăng nhập thất bại.",
+            "incorrect": "Email hoặc mật khẩu không chính xác."
         },
         "verify_email": {
             "successfully": "Xác minh email thành công. Bạn có thể đăng nhập và sử dụng dịch vụ của chúng tôi.",
@@ -39,45 +39,85 @@
             "invalid_token": "Token đặt lại mật khẩu không hợp lệ hoặc đã hết hạn. Vui lòng thử lại."
         }
     },
+    "users": {
+        "register_seller": {},
+        "not_found": "Không tìm thấy người dùng."
+    },
+    "sellers": {
+        "register_seller": {
+            "successfully": "Đăng ký người bán thành công.",
+            "failed": "Đăng ký người bán thất bại.",
+            "email_exist": "Email đã tồn tại.",
+            "email_not_match": "Email phải là email đã đăng ký.",
+            "not_active": "Tài khoản người mua chưa được kích hoạt. Vui lòng kích hoạt tài khoản người mua trước khi đăng ký người bán.",
+            "already_seller": "Tài khoản người mua đã được đăng ký người bán trước đó."
+        },
+        "list_sellers": {
+            "successfully": "Lấy danh sách người bán thành công.",
+            "failed": "Lấy danh sách người bán thất bại."
+        },
+        "detail_seller": {
+            "successfully": "Lấy chi tiết người bán thành công.",
+            "failed": "Lấy chi tiết người bán thất bại."
+        },
+        "Admin": {
+            "approve_seller": {
+                "successfully": "Duyệt người bán thành công.",
+                "failed": "Duyệt người bán thất bại."
+        },
+            "reject_seller": {
+                "successfully": "Từ chối người bán thành công.",
+                "failed": "Từ chối người bán thất bại."
+        },
+            "list_sellers": {
+                "successfully": "Lấy danh sách người bán thành công.",
+                "failed": "Lấy danh sách người bán thất bại."
+            },
+            "detail_seller": {
+                "successfully": "Lấy chi tiết người bán thành công.",
+                "failed": "Lấy chi tiết người bán thất bại."
+            }
+         }
+    },
     "projects": {
         "create": {
             "successfully": "Tạo dự án thành công.",
-            "failed": "Tạo dự án thất bại"
+            "failed": "Tạo dự án thất bại."
         },
         "list": {
             "successfully": "Lấy danh sách dự án thành công.",
-            "failed": "Lấy danh sách dự án thất bại"
+            "failed": "Lấy danh sách dự án thất bại."
         },
         "detail": {
             "successfully": "Lấy chi tiết dự án thành công.",
-            "failed": "Lấy chi tiết dự án thất bại"
+            "failed": "Lấy chi tiết dự án thất bại."
         },
         "update": {
             "successfully": "Cập nhật dự án thành công.",
-            "failed": "Cập nhật dự án thất bại"
+            "failed": "Cập nhật dự án thất bại."
         },
         "remove": {
             "successfully": "Xóa dự án thành công.",
-            "failed": "Xóa dự án thất bại"
+            "failed": "Xóa dự án thất bại."
         },
-        "not_found": "Dự án không tồn tại"
+        "not_found": "Dự án không tồn tại."
     },
     "schema": {
         "users": {
             "email": {
                 "invalid": "Email không hợp lệ. (example@example.com)",
-                "required": "Email là bắt buộc"
+                "required": "Email là bắt buộc."
             },
             "username": {
-                "required": "Tên người dùng là bắt buộc",
+                "required": "Tên người dùng là bắt buộc.",
                 "invalid": "Tên người dùng không được chứa ký tự đặc biệt hoặc số."
             },
             "password": {
-                "required": "Mật khẩu là bắt buộc",
-                "invalid": "Mật khẩu phải chứa ít nhất 1 chữ cái, 1 số, và ít nhất 8 ký tự."
+                "required": "Mật khẩu là bắt buộc.",
+                "invalid": "Mật khẩu phải chứa ít nhất 1 chữ cái, 1 số và ít nhất 8 ký tự."
             },
             "id": {
-                "invalid": "Chuỗi của bạn không khớp với mẫu Object Id!",
+                "invalid": "Chuỗi của bạn không khớp với mẫu ObjectId.",
                 "required": "ID là bắt buộc."
             }
         },
@@ -110,8 +150,102 @@
                 }
             }
         },
+        "sellers": {
+            "seller_type": {
+                "required": "Loại người bán là bắt buộc."
+            },
+            "individual_identity": {
+                "full_name": {
+                    "required": "Họ tên là bắt buộc."
+                },
+                "id_number": {
+                    "required": "Mã số định danh là bắt buộc.",
+                    "invalid": "Mã định danh không hợp lệ."
+                },
+                "id_card_images": {
+                    "invalid_url": "URL ảnh định danh không hợp lệ.",
+                    "required": "Ảnh định danh là bắt buộc.",
+                    "min": "Cần ít nhất 2 hình ảnh (mặt trước và mặt sau của thẻ định danh).",
+                    "max": "Tối đa chỉ 2 hình ảnh (mặt trước và mặt sau của thẻ định danh)."
+                },
+                "tax_code": {
+                    "invalid": "Mã số thuế không hợp lệ."
+                }
+            },
+            "business_identity": {
+                "full_name": {
+                    "required": "Họ tên là bắt buộc."
+                },
+                "tax_code": {
+                    "invalid": "Mã số thuế không hợp lệ.",
+                    "required": "Mã số thuế là bắt buộc."
+                },
+                "business_license_url": {
+                    "required": "Giấy phép kinh doanh là bắt buộc."
+                },
+                "representative_name": {
+                    "required": "Tên người đại diện là bắt buộc."
+                },
+                "representative_id_number": {
+                    "required": "Mã số người đại diện là bắt buộc.",
+                    "invalid": "Mã số người đại diện không hợp lệ."
+                }
+            },
+            "register_seller": {
+                "user_id": {
+                    "required": "ID người dùng là bắt buộc."
+                },
+                "phone_number": {
+                    "required": "Số điện thoại là bắt buộc."
+                }
+            },
+            "shop_name": {
+                "required": "Tên cửa hàng là bắt buộc."
+            }
+        },
+        "shop": {
+            "name": {
+                "required": "Tên cửa hàng là bắt buộc."
+            },
+            "ownerId": {
+                "required": "ID chủ sở hữu là bắt buộc.",
+                "invalid": "ID chủ sở hữu không hợp lệ."
+            },
+            "address": {
+                "required": "Địa chỉ cửa hàng là bắt buộc."
+            },
+            "phoneNumber": {
+                "required": "Số điện thoại cửa hàng là bắt buộc.",
+                "invalid": "Số điện thoại cửa hàng không hợp lệ."
+            },
+            "logo": {
+                "required": "Logo cửa hàng là bắt buộc."
+            },
+            "description": {
+                "required": "Mô tả cửa hàng là bắt buộc."
+            }
+        },
         "failed": {
             "required": "Trường này là bắt buộc."
+        }
+    },
+    "search": {
+        "products": {
+            "successfully": "Tìm kiếm sản phẩm thành công.",
+            "failed": "Tìm kiếm sản phẩm thất bại."
+        }
+    },
+    "system": {
+        "health": {
+            "ready": "Sẵn sàng sử dụng."
+        },
+        "auth": {
+            "token_expired": "Token đã hết hạn.",
+            "need_refresh": "Cần làm mới token.",
+            "unauthorized": "Không được phép truy cập.",
+            "token_not_found": "Không tìm thấy token.",
+            "forbidden": "Bạn không có quyền truy cập.",
+            "invalid_token": "Token không hợp lệ."
         }
     }
 }

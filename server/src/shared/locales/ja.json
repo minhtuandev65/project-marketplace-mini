@@ -1,0 +1,237 @@
+{
+    "settings": {
+        "language_changed": "言語の変更に成功しました。"
+    },
+    "auth": {
+        "register": {
+            "successfully": "アカウントの登録に成功しました。",
+            "failed": "アカウントの登録に失敗しました。",
+            "email_exist": "このメールアドレスは既に存在しています。"
+        },
+        "login": {
+            "successfully": "ログインに成功しました。",
+            "failed": "ログインに失敗しました。",
+            "incorrect": "メールアドレスまたはパスワードが正しくありません。"
+        },
+        "verify_email": {
+            "successfully": "メール認証に成功しました。ログインしてサービスをご利用いただけます。",
+            "failed": "メール認証に失敗しました。認証リンクを再度ご確認いただくか、サポートまでお問い合わせください。",
+            "already_verified": "このメールアドレスは既に認証されています。ログインしてサービスをご利用いただけます。"
+        },
+        "refresh_token": {
+            "successfully": "トークンの更新に成功しました。",
+            "failed": "トークンの更新に失敗しました。再度ログインしてください。",
+            "invalid_token": "リフレッシュトークンが無効か、有効期限が切れています。再度ログインしてください。",
+            "reuse_detected": "トークンの再利用が検出されました。すべてのリフレッシュトークンは失効しました。再度ログインしてください。"
+        },
+        "logout": {
+            "successfully": "ログアウトに成功しました。",
+            "failed": "ログアウトに失敗しました。もう一度お試しください。",
+            "invalid_token": "トークンが無効か、有効期限が切れています。再度ログインしてください。"
+        },
+        "forgot_password": {
+            "successfully": "パスワード再設定のリクエストに成功しました。続きの手順はメールをご確認ください。",
+            "failed": "パスワード再設定のリクエストに失敗しました。もう一度お試しください。"
+        },
+        "reset_password": {
+            "successfully": "パスワードの再設定に成功しました。",
+            "failed": "パスワードの再設定に失敗しました。もう一度お試しください。",
+            "invalid_token": "パスワード再設定トークンが無効か、有効期限が切れています。もう一度お試しください。"
+        }
+    },
+    "users": {
+        "register_seller": {},
+        "not_found": "ユーザーが見つかりません。"
+    },
+    "sellers": {
+        "register_seller": {
+            "successfully": "出品者登録に成功しました。",
+            "failed": "出品者登録に失敗しました。",
+            "email_exist": "このメールアドレスは既に存在しています。",
+            "email_not_match": "メールアドレスは登録済みのものと一致している必要があります。",
+            "not_active": "購入者アカウントがまだ有効化されていません。出品者登録の前に購入者アカウントを有効化してください。",
+            "already_seller": "この購入者アカウントは既に出品者として登録されています。"
+        },
+        "list_sellers": {
+            "successfully": "出品者一覧の取得に成功しました。",
+            "failed": "出品者一覧の取得に失敗しました。"
+        },
+        "approve_seller": {
+            "successfully": "出品者の承認に成功しました。",
+            "failed": "出品者の承認に失敗しました。"
+        },
+        "detail_seller": {
+            "successfully": "出品者詳細の取得に成功しました。",
+            "failed": "出品者詳細の取得に失敗しました。"
+        }
+    },
+    "projects": {
+        "create": {
+            "successfully": "プロジェクトの作成に成功しました。",
+            "failed": "プロジェクトの作成に失敗しました。"
+        },
+        "list": {
+            "successfully": "プロジェクト一覧の取得に成功しました。",
+            "failed": "プロジェクト一覧の取得に失敗しました。"
+        },
+        "detail": {
+            "successfully": "プロジェクト詳細の取得に成功しました。",
+            "failed": "プロジェクト詳細の取得に失敗しました。"
+        },
+        "update": {
+            "successfully": "プロジェクトの更新に成功しました。",
+            "failed": "プロジェクトの更新に失敗しました。"
+        },
+        "remove": {
+            "successfully": "プロジェクトの削除に成功しました。",
+            "failed": "プロジェクトの削除に失敗しました。"
+        },
+        "not_found": "プロジェクトは存在しません。"
+    },
+    "schema": {
+        "users": {
+            "email": {
+                "invalid": "メールアドレスの形式が正しくありません。（example@example.com）",
+                "required": "メールアドレスは必須です。"
+            },
+            "username": {
+                "required": "ユーザー名は必須です。",
+                "invalid": "ユーザー名に特殊文字や数字を含めることはできません。"
+            },
+            "password": {
+                "required": "パスワードは必須です。",
+                "invalid": "パスワードは英字を1文字以上、数字を1文字以上含み、8文字以上である必要があります。"
+            },
+            "id": {
+                "invalid": "入力された文字列は ObjectId 形式と一致しません。",
+                "required": "ID は必須です。"
+            }
+        },
+        "projects": {
+            "title": {
+                "required": "プロジェクトタイトルは必須です。"
+            },
+            "slug": {
+                "required": "スラッグは必須です。",
+                "invalid": "スラッグは小文字で、ハイフンのみ使用できます。"
+            },
+            "shortDescription": {
+                "required": "短い説明は必須です。"
+            },
+            "description": {
+                "required": "説明は必須です。"
+            },
+            "thumbnail": {
+                "required": "サムネイルは必須です。"
+            },
+            "url": {
+                "invalid": "URL が正しくありません。"
+            },
+            "techStack": {
+                "name": {
+                    "required": "技術名は必須です。"
+                },
+                "type": {
+                    "invalid": "技術タイプが正しくありません。"
+                }
+            }
+        },
+        "sellers": {
+            "seller_type": {
+                "required": "出品者タイプは必須です。"
+            },
+            "individual_identity": {
+                "full_name": {
+                    "required": "氏名は必須です。"
+                },
+                "id_number": {
+                    "required": "本人確認番号は必須です。",
+                    "invalid": "本人確認番号が正しくありません。"
+                },
+                "id_card_images": {
+                    "invalid_url": "本人確認画像の URL が正しくありません。",
+                    "required": "本人確認画像は必須です。",
+                    "min": "少なくとも 2 枚の画像が必要です（本人確認書類の表面と裏面）。",
+                    "max": "画像は最大 2 枚までです（本人確認書類の表面と裏面）。"
+                },
+                "tax_code": {
+                    "invalid": "納税者番号が正しくありません。"
+                }
+            },
+            "business_identity": {
+                "full_name": {
+                    "required": "氏名は必須です。"
+                },
+                "tax_code": {
+                    "invalid": "納税者番号が正しくありません。",
+                    "required": "納税者番号は必須です。"
+                },
+                "business_license_url": {
+                    "required": "営業許可証は必須です。"
+                },
+                "representative_name": {
+                    "required": "代表者名は必須です。"
+                },
+                "representative_id_number": {
+                    "required": "代表者の本人確認番号は必須です。",
+                    "invalid": "代表者の本人確認番号が正しくありません。"
+                }
+            },
+            "register_seller": {
+                "user_id": {
+                    "required": "ユーザー ID は必須です。"
+                },
+                "phone_number": {
+                    "required": "電話番号は必須です。"
+                }
+            },
+            "shop_name": {
+                "required": "ショップ名は必須です。"
+            }
+        },
+        "shop": {
+            "name": {
+                "required": "ショップ名は必須です。"
+            },
+            "ownerId": {
+                "required": "所有者 ID は必須です。",
+                "invalid": "所有者 ID が正しくありません。"
+            },
+            "address": {
+                "required": "ショップの住所は必須です。"
+            },
+            "phoneNumber": {
+                "required": "ショップの電話番号は必須です。",
+                "invalid": "ショップの電話番号が正しくありません。"
+            },
+            "logo": {
+                "required": "ショップのロゴは必須です。"
+            },
+            "description": {
+                "required": "ショップの説明は必須です。"
+            }
+        },
+        "failed": {
+            "required": "この項目は必須です。"
+        }
+    },
+    "search": {
+        "products": {
+            "successfully": "商品の検索に成功しました。",
+            "failed": "商品の検索に失敗しました。"
+        }
+    },
+    "system": {
+        "health": {
+            "ready": "利用可能です。"
+        },
+        "auth": {
+            "token_expired": "トークンの有効期限が切れています。",
+            "need_refresh": "トークンの更新が必要です。",
+            "unauthorized": "アクセス権がありません。",
+            "token_not_found": "トークンが見つかりません。",
+            "forbidden": "このリソースにアクセスする権限がありません。",
+            "invalid_token": "無効なトークンです。"
+        }
+    }
+}

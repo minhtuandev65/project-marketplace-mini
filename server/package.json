@@ -1,5 +1,5 @@
 {
-    "name": "project-foodiehub-qt-be",
+    "name": "project-marketplace-mini-server",
     "private": true,
     "version": "1.0.0",
     "author": "Dev_Tuan",
@@ -33,6 +33,7 @@
         "aws-sdk": "^2.1692.0",
         "axios": "^1.10.0",
         "bcryptjs": "^3.0.2",
+        "bullmq": "^5.70.1",
         "cloudinary": "^2.6.0",
         "cookie-parser": "^1.4.7",
         "cors": "^2.8.5",
@@ -46,6 +47,7 @@
         "i18next": "^25.5.2",
         "i18next-fs-backend": "^2.6.0",
         "i18next-http-middleware": "^3.8.0",
+        "ioredis": "^5.10.0",
         "joi": "^17.13.3",
         "jsonwebtoken": "^9.0.2",
         "mongodb": "^6.13.0",
